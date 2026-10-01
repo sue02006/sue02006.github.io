@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METRO COMMAND & CONTROL CENTER - TAIWAN NETWORK</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            bg: '#040914',
+                            panel: 'rgba(8, 20, 42, 0.75)',
+                            border: '#00f0ff',
+                            red: '#ff0033',
+                            yellow: '#ffcc00',
+                            green: '#00ff66',
+                            blue: '#00aaff',
+                            brown: '#c68a4c',
+                            orange: '#ff8800'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'],
+                        sans: ['Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #030712;
+            color: #e2e8f0;
+            overflow: hidden;
+            user-select: none;
+            font-family: 'Share Tech Mono', 'Noto Sans TC', monospace;
+        }
+
+        /* Scanline Overlay Effect */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.3) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* Cyberpunk Glassmorphic Panel */
+        .cyber-panel {
+            background: rgba(6, 16, 37, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.08), inset 0 0 15px rgba(0, 240, 255, 0.05);
+        }
+
+        .cyber-panel-red {
+            background: rgba(35, 5, 12, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 0, 51, 0.4);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.2);
+        }
+
+        /* Red Alert Screen Flash Strobe */
+        @keyframes redStrobe {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.35; }
+        }
+        .red-alert-flash {
+            animation: redStrobe 0.6s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Screen Shake Animation for Movie Scenes */
+        @keyframes screenShake {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-6px, -4px) rotate(-0.5deg); }
+            20% { transform: translate(5px, 3px) rotate(0.5deg); }
+            30% { transform: translate(-4px, 5px) rotate(0deg); }
+            40% { transform: translate(4px, -3px) rotate(0.3deg); }
+            50% { transform: translate(-3px, 2px) rotate(-0.3deg); }
+            60% { transform: translate(3px, 4px) rotate(0deg); }
+            70% { transform: translate(-2px, -3px) rotate(0.2deg); }
+            80% { transform: translate(4px, 1px) rotate(-0.2deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        .shake-active {
+            animation: screenShake 0.4s infinite ease-in-out;
+        }
+
+        /* Pulsing Glow for Damaged Tracks/Stations */
+        @keyframes alertPulse {
+            0%, 100% { r: 8px; fill: #ff0033; filter: drop-shadow(0 0 12px #ff0033); }
+            50% { r: 16px; fill: #ffffff; filter: drop-shadow(0 0 25px #ff0033); }
+        }
+        .station-alert {
+            animation: alertPulse 0.5s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(4, 9, 20, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00f0ff;
+            border-radius: 2px;
+        }
+
+        /* Corner Tech Decorators */
+        .corner-decorator {
+            position: relative;
+        }
+        .corner-decorator::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 8px; height: 8px;
+            border-top: 2px solid #00f0ff;
+            border-left: 2px solid #00f0ff;
+        }
+        .corner-decorator::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 8px; height: 8px;
+            border-bottom: 2px solid #00f0ff;
+            border-right: 2px solid #00f0ff;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between overflow-hidden relative" id="app-body">
+
+    <!-- Red Alert Fullscreen Strobe Overlay -->
+    <div id="red-alert-overlay" class="fixed inset-0 bg-red-600 z-40 hidden red-alert-flash"></div>
+
+    <!-- Scanline Screen Effect -->
+    <div class="fixed inset-0 scanlines z-30 pointer-events-none"></div>
+
+    <!-- HEADER / TOP COMMAND BAR -->
+    <header class="h-16 border-b border-cyan-500/30 bg-slate-950/90 z-20 px-6 flex items-center justify-between shadow-lg relative">
+        <div class="flex items-center gap-4">
+            <div class="p-2 bg-cyan-500/10 border border-cyan-500/50 rounded-lg text-cyan-400">
+                <i class="fa-solid font-black fa-network-wired text-2xl animate-pulse"></i>
+            </div>
+            <div>
+                <h1 class="font-orbitron font-black text-xl tracking-wider text-cyan-400 flex items-center gap-3">
+                    TAIPEI METRO CENTRAL COMMAND & CONTROL CENTER
+                    <span id="system-status-badge" class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500 text-emerald-400 font-mono tracking-normal">SYSTEM NORMAL</span>
+                </h1>
+                <p class="text-xs text-slate-400 font-mono">AUTOMATED TRAIN CONTROL (ATC) & AUTOMATION LEVEL 4 (GoA4)</p>
+            </div>
+        </div>
+
+        <!-- Top Telemetry Counters -->
+        <div class="flex items-center gap-8 font-mono">
+            <div class="text-right">
+                <div class="text-xs text-slate-400">TOTAL RIDERSHIP (即時人數)</div>
+                <div id="total-ridership" class="text-xl font-bold font-orbitron text-cyan-300">1,482,920</div>
+            </div>
+            <div class="text-right">
+                <div class="text-xs text-slate-400">ACTIVE FLEET (運轉車輛)</div>
+                <div id="active-trains-count" class="text-xl font-bold font-orbitron text-emerald-400">28 FLEETS</div>
+            </div>
+            <div class="text-right">
+                <div class="text-xs text-slate-400">GRID VOLTAGE (主電網)</div>
+                <div id="grid-voltage" class="text-xl font-bold font-orbitron text-yellow-400">752.4 VDC</div>
+            </div>
+            <div class="text-right">
+                <div class="text-xs text-slate-400">SYSTEM TIME (系統時間)</div>
+                <div id="clock-display" class="text-xl font-bold font-orbitron text-white">10:54:09.28</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="flex-1 grid grid-cols-12 gap-3 p-3 z-10 overflow-hidden relative">
+
+        <!-- LEFT SIDE PANEL: HUD METRICS & DATA CHAOS -->
+        <section class="col-span-3 flex flex-col gap-3 h-full">
+            
+            <!-- Real-time Power Waveform Canvas -->
+            <div class="cyber-panel p-3 rounded-lg corner-decorator flex flex-col gap-2">
+                <div class="flex justify-between items-center border-b border-cyan-500/20 pb-1">
+                    <span class="text-xs font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> HIGH-VOLTAGE SUBSTATION WAVE
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">750V REGULATED</span>
+                </div>
+                <canvas id="waveformCanvas" class="w-full h-24 bg-slate-950/80 rounded border border-cyan-900/50"></canvas>
+            </div>
+
+            <!-- Train Telemetry Quick Metrics -->
+            <div class="cyber-panel p-3 rounded-lg corner-decorator flex-1 flex flex-col justify-between">
+                <div class="flex justify-between items-center border-b border-cyan-500/20 pb-2">
+                    <span class="text-xs font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-gauge-high"></i> NETWORK STATUS HUD
+                    </span>
+                    <span class="text-[10px] text-cyan-300 font-mono animate-pulse">LIVE TELEMETRY</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 my-2 font-mono">
+                    <div class="bg-slate-900/60 p-2 rounded border border-cyan-800/40">
+                        <div class="text-[10px] text-slate-400">AVG SPEED</div>
+                        <div id="hud-avg-speed" class="text-lg font-bold text-white font-orbitron">64.2 km/h</div>
+                    </div>
+                    <div class="bg-slate-900/60 p-2 rounded border border-cyan-800/40">
+                        <div class="text-[10px] text-slate-400">MIN HEADWAY</div>
+                        <div id="hud-headway" class="text-lg font-bold text-cyan-400 font-orbitron">90 SEC</div>
+                    </div>
+                    <div class="bg-slate-900/60 p-2 rounded border border-cyan-800/40">
+                        <div class="text-[10px] text-slate-400">SIGNAL LATENCY</div>
+                        <div id="hud-latency" class="text-lg font-bold text-emerald-400 font-orbitron">1.2 ms</div>
+                    </div>
+                    <div class="bg-slate-900/60 p-2 rounded border border-cyan-800/40">
+                        <div class="text-[10px] text-slate-400">ATC OVERRIDE</div>
+                        <div id="hud-override" class="text-lg font-bold text-slate-400 font-orbitron">OFF</div>
+                    </div>
+                </div>
+
+                <!-- Fast Hex & Binary Data Chaos Box for Cinema Effect -->
+                <div class="bg-black/80 rounded p-2 border border-cyan-900/60 font-mono text-[10px] leading-tight text-emerald-400 h-28 overflow-hidden relative">
+                    <div class="text-slate-500 text-[9px] mb-1 flex justify-between">
+                        <span>CBTC STREAM PACKETS</span>
+                        <span id="packet-counter">PKT: 894201</span>
+                    </div>
+                    <pre id="data-chaos-stream" class="text-emerald-500 opacity-80 select-none"></pre>
+                </div>
+
+                <!-- Emergency Siren Controls -->
+                <div class="pt-2 border-t border-cyan-500/20 flex flex-col gap-2">
+                    <button id="btn-trigger-alarm" onclick="triggerAlert('MANUAL MANUAL EMERGENCY OVERRIDE TRIGGERED! ALL SECTORS HALT!')" class="w-full py-2 bg-red-600/30 hover:bg-red-600/60 text-red-300 border border-red-500 font-bold font-orbitron text-xs rounded transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation animate-bounce"></i> TRIGGER RED ALERT (觸發緊急警報)
+                    </button>
+                    <button id="btn-clear-alarm" onclick="clearAlert()" class="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 font-bold font-orbitron text-xs rounded transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> CLEAR ALL ALERTS (解除所有警報)
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- CENTER PANEL: INTERACTIVE METRO MAP & TRACKING -->
+        <section class="col-span-6 h-full flex flex-col gap-3 relative">
+            <div class="cyber-panel p-3 rounded-lg corner-decorator flex-1 flex flex-col relative overflow-hidden">
+                <div class="flex justify-between items-center mb-2 z-10">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold text-cyan-400 flex items-center gap-2 font-orbitron">
+                            <i class="fa-solid fa-map-location-dot"></i> REAL-TIME LINE TRACKING (捷運路網拓撲圖)
+                        </span>
+                        <!-- Line Legend Badges -->
+                        <div class="flex items-center gap-1.5 text-[10px]">
+                            <span class="px-1.5 py-0.5 rounded bg-red-600 text-white font-bold">R 淡水信義</span>
+                            <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white font-bold">BL 板南</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-600 text-white font-bold">G 松山新店</span>
+                            <span class="px-1.5 py-0.5 rounded bg-orange-500 text-white font-bold">O 中和新蘆</span>
+                            <span class="px-1.5 py-0.5 rounded bg-amber-700 text-white font-bold">BR 文湖</span>
+                        </div>
+                    </div>
+                    <span class="text-[11px] text-slate-400 font-mono">MAP SCALE: 1:10000 | CBTC LIVE</span>
+                </div>
+
+                <!-- SVG Metro Map Canvas Area -->
+                <div class="flex-1 bg-slate-950/90 rounded border border-cyan-900/50 relative overflow-hidden flex items-center justify-center" id="map-container">
+                    <svg id="metro-svg" class="w-full h-full" viewBox="0 0 1000 700">
+                        <defs>
+                            <!-- Line Glow Filters -->
+                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="3" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                            <filter id="glow-heavy" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="8" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+
+                        <!-- Tracks SVG Group -->
+                        <g id="tracks-group" stroke-linecap="round" stroke-linejoin="round"></g>
+
+                        <!-- Stations SVG Group -->
+                        <g id="stations-group"></g>
+
+                        <!-- Trains SVG Group -->
+                        <g id="trains-group"></g>
+                    </svg>
+
+                    <!-- Station/Train Click Info Floating Card -->
+                    <div id="map-info-card" class="absolute top-4 right-4 bg-slate-900/90 border border-cyan-400 p-3 rounded shadow-xl text-xs font-mono hidden z-20 w-64 backdrop-blur-md">
+                        <div class="flex justify-between items-center border-b border-cyan-500/30 pb-1 mb-2">
+                            <span id="info-card-title" class="font-bold text-cyan-300 font-orbitron">OBJECT DATA</span>
+                            <button onclick="closeInfoCard()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div id="info-card-body" class="space-y-1 text-slate-300"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT SIDE PANEL: DISPATCH & CONTROL PANEL -->
+        <section class="col-span-3 flex flex-col gap-3 h-full">
+            
+            <!-- Dispatch Control Center Panel -->
+            <div class="cyber-panel p-3 rounded-lg corner-decorator flex flex-col gap-3">
+                <div class="flex justify-between items-center border-b border-cyan-500/20 pb-2">
+                    <span class="text-xs font-bold text-cyan-400 flex items-center gap-2 font-orbitron">
+                        <i class="fa-solid fa-sliders"></i> DISPATCH & SCHEDULE CONTROL
+                    </span>
+                    <span class="text-[10px] text-emerald-400 font-mono">AUTO-ROUTING</span>
+                </div>
+
+                <!-- Add Train Buttons by Line -->
+                <div class="space-y-2">
+                    <div class="text-[11px] text-slate-300 font-semibold">DISPATCH NEW TRAIN (手動發車調度)</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="dispatchTrain('R')" class="py-1.5 px-2 bg-red-950/80 hover:bg-red-800 text-red-200 border border-red-500/50 rounded text-xs font-mono text-left flex justify-between items-center transition">
+                            <span>+ RED LINE</span>
+                            <i class="fa-solid fa-train text-[10px]"></i>
+                        </button>
+                        <button onclick="dispatchTrain('BL')" class="py-1.5 px-2 bg-blue-950/80 hover:bg-blue-800 text-blue-200 border border-blue-500/50 rounded text-xs font-mono text-left flex justify-between items-center transition">
+                            <span>+ BLUE LINE</span>
+                            <i class="fa-solid fa-train text-[10px]"></i>
+                        </button>
+                        <button onclick="dispatchTrain('G')" class="py-1.5 px-2 bg-emerald-950/80 hover:bg-emerald-800 text-emerald-200 border border-emerald-500/50 rounded text-xs font-mono text-left flex justify-between items-center transition">
+                            <span>+ GREEN LINE</span>
+                            <i class="fa-solid fa-train text-[10px]"></i>
+                        </button>
+                        <button onclick="dispatchTrain('O')" class="py-1.5 px-2 bg-orange-950/80 hover:bg-orange-800 text-orange-200 border border-orange-500/50 rounded text-xs font-mono text-left flex justify-between items-center transition">
+                            <span>+ ORANGE LINE</span>
+                            <i class="fa-solid fa-train text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Headway Interval Adjustment -->
+                <div class="space-y-1 pt-2 border-t border-cyan-900/40">
+                    <div class="flex justify-between text-xs font-mono">
+                        <span class="text-slate-300">NETWORK HEADWAY (全線班距):</span>
+                        <span id="headway-val" class="text-cyan-400 font-bold">90s</span>
+                    </div>
+                    <input type="range" id="headway-slider" min="30" max="180" value="90" oninput="updateHeadway(this.value)" class="w-full accent-cyan-400 cursor-pointer">
+                </div>
+
+                <!-- System Controls -->
+                <div class="grid grid-cols-1 gap-2 pt-2 border-t border-cyan-900/40">
+                    <button id="btn-platform-hold" onclick="togglePlatformHold()" class="py-2 px-3 bg-yellow-950/60 hover:bg-yellow-900/80 border border-yellow-500/50 text-yellow-300 rounded font-mono text-xs flex justify-between items-center transition">
+                        <span><i class="fa-solid fa-hand"></i> EMERGENCY PLATFORM HOLD</span>
+                        <span id="hold-status-text" class="text-[10px] px-1.5 py-0.5 rounded bg-yellow-500/20 border border-yellow-500">READY</span>
+                    </button>
+                    <button id="btn-speed-override" onclick="toggleSpeedOverride()" class="py-2 px-3 bg-purple-950/60 hover:bg-purple-900/80 border border-purple-500/50 text-purple-300 rounded font-mono text-xs flex justify-between items-center transition">
+                        <span><i class="fa-solid fa-gauge-fast"></i> MAXIMUM SPEED OVERRIDE</span>
+                        <span id="override-status-text" class="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 border border-purple-500">DISABLED</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Alerts & Logs Stream -->
+            <div class="cyber-panel p-3 rounded-lg corner-decorator flex-1 flex flex-col">
+                <div class="flex justify-between items-center border-b border-cyan-500/20 pb-2 mb-2">
+                    <span class="text-xs font-bold text-cyan-400 flex items-center gap-2 font-orbitron">
+                        <i class="fa-solid fa-rectangle-list"></i> COMMAND EVENT LOG
+                    </span>
+                    <span class="text-[10px] text-slate-400 font-mono">SYSTEM LOGS</span>
+                </div>
+                <div id="event-logs-container" class="flex-1 overflow-y-auto font-mono text-[11px] space-y-1.5 pr-1"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- BOTTOM DIRECTOR'S HOTKEYS CONTROL BAR FOR MOVIE FILMING -->
+    <footer class="h-14 border-t border-cyan-500/30 bg-slate-950/95 z-20 px-4 flex items-center justify-between shadow-2xl relative">
+        <div class="flex items-center gap-2">
+            <span class="text-xs font-black font-orbitron text-cyan-400 tracking-wider flex items-center gap-1.5 mr-2">
+                <i class="fa-solid fa-clapperboard text-yellow-400"></i> DIRECTOR'S HOTKEYS:
+            </span>
+
+            <button onclick="directorRedAlert()" class="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold font-orbitron text-xs rounded border border-red-300 shadow-lg shadow-red-600/30 transition active:scale-95 flex items-center gap-1">
+                <i class="fa-solid fa-siren-on"></i> [1] RED ALERT
+            </button>
+
+            <button onclick="directorDispatchBurst()" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white font-bold font-orbitron text-xs rounded border border-cyan-300 shadow-lg shadow-cyan-600/30 transition active:scale-95 flex items-center gap-1">
+                <i class="fa-solid fa-train-subway"></i> [2] DISPATCH
+            </button>
+
+            <button onclick="directorShakeScreen()" class="px-3 py-1.5 bg-yellow-600 hover:bg-yellow-500 text-white font-bold font-orbitron text-xs rounded border border-yellow-300 shadow-lg shadow-yellow-600/30 transition active:scale-95 flex items-center gap-1">
+                <i class="fa-solid fa-house-crack"></i> [3] SCREEN SHAKE
+            </button>
+
+            <button onclick="directorChaosMode()" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white font-bold font-orbitron text-xs rounded border border-purple-300 shadow-lg shadow-purple-600/30 transition active:scale-95 flex items-center gap-1">
+                <i class="fa-solid fa-code-merge"></i> [4] DATA CHAOS
+            </button>
+
+            <button onclick="directorMaxOverride()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold font-orbitron text-xs rounded border border-emerald-300 shadow-lg shadow-emerald-600/30 transition active:scale-95 flex items-center gap-1">
+                <i class="fa-solid fa-key"></i> [5] OVERRIDE
+            </button>
+
+            <button onclick="directorReset()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold font-orbitron text-xs rounded border border-slate-400 transition active:scale-95 flex items-center gap-1">
+                <i class="fa-solid fa-rotate-right"></i> [6] RESET
+            </button>
+        </div>
+
+        <div class="flex items-center gap-3 text-xs font-mono">
+            <button id="audio-toggle-btn" onclick="toggleAudioMute()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-800 rounded flex items-center gap-2">
+                <i id="audio-icon" class="fa-solid fa-volume-high"></i> AUDIO: ON
+            </button>
+            <span class="text-slate-500">|</span>
+            <span class="text-slate-400">STUDIO CINEMATIC MODE v3.5</span>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+
+        // Global State & Config
+        let audioMuted = false;
+        let isRedAlert = false;
+        let isPlatformHold = false;
+        let isSpeedOverride = false;
+        let globalSpeedMultiplier = 1.0;
+        let audioCtx = null;
+        let alertSirenInterval = null;
+
+        // Lines Colors & Geometry Data
+        const LINES = {
+            'R': { name: '淡水信義線 (Red Line)', color: '#ff0033', bg: 'bg-red-600' },
+            'BL': { name: '板南線 (Blue Line)', color: '#0066ff', bg: 'bg-blue-600' },
+            'G': { name: '松山新店線 (Green Line)', color: '#00cc66', bg: 'bg-emerald-600' },
+            'O': { name: '中和新蘆線 (Orange Line)', color: '#ff8800', bg: 'bg-orange-500' },
+            'BR': { name: '文湖線 (Brown Line)', color: '#c68a4c', bg: 'bg-amber-700' }
+        };
+
+        // Network Stations Database
+        const STATIONS = [
+            // Red Line (R)
+            { id: 'R05', name: '大安', line: 'R', x: 600, y: 480, isTransfer: true, lines: ['R', 'BR'] },
+            { id: 'R07', name: '東門', line: 'R', x: 500, y: 480, isTransfer: true, lines: ['R', 'O'] },
+            { id: 'R08', name: '中正紀念堂', line: 'R', x: 420, y: 480, isTransfer: true, lines: ['R', 'G'] },
+            { id: 'R10', name: '台北車站', line: 'R', x: 420, y: 360, isTransfer: true, lines: ['R', 'BL'] },
+            { id: 'R11', name: '中山', line: 'R', x: 420, y: 280, isTransfer: true, lines: ['R', 'G'] },
+            { id: 'R13', name: '民權西路', line: 'R', x: 420, y: 200, isTransfer: true, lines: ['R', 'O'] },
+            { id: 'R16', name: '士林', line: 'R', x: 420, y: 120, isTransfer: false },
+            { id: 'R22', name: '淡水', line: 'R', x: 280, y: 80, isTransfer: false },
+
+            // Blue Line (BL)
+            { id: 'BL07', name: '板橋', line: 'BL', x: 180, y: 520, isTransfer: false },
+            { id: 'BL11', name: '西門', line: 'BL', x: 320, y: 360, isTransfer: true, lines: ['BL', 'G'] },
+            // BL12 is Taipei Main Station (R10)
+            { id: 'BL15', name: '忠孝復興', line: 'BL', x: 600, y: 360, isTransfer: true, lines: ['BL', 'BR'] },
+            { id: 'BL18', name: '昆陽', line: 'BL', x: 780, y: 360, isTransfer: false },
+
+            // Green Line (G)
+            { id: 'G08', name: '古亭', line: 'G', x: 420, y: 560, isTransfer: true, lines: ['G', 'O'] },
+            // G10 is Chiang Kai-shek Memorial Hall (R08)
+            { id: 'G12', name: '西門', line: 'G', x: 320, y: 360, isTransfer: true, lines: ['G', 'BL'] },
+            { id: 'G14', name: '中山', line: 'G', x: 420, y: 280, isTransfer: true, lines: ['G', 'R'] },
+            { id: 'G15', name: '松江南京', line: 'G', x: 520, y: 280, isTransfer: true, lines: ['G', 'O'] },
+            { id: 'G16', name: '南京復興', line: 'G', x: 600, y: 280, isTransfer: true, lines: ['G', 'BR'] },
+
+            // Orange Line (O)
+            { id: 'O05', name: '古亭', line: 'O', x: 420, y: 560, isTransfer: true, lines: ['O', 'G'] },
+            // O06 is Dongmen (R07)
+            { id: 'O08', name: '忠孝新生', line: 'O', x: 520, y: 360, isTransfer: true, lines: ['O', 'BL'] },
+            // O09 is Songjiang Nanjing (G15)
+            // O11 is Minquan W. Rd. (R13)
+
+            // Brown Line (BR)
+            // BR09 is Daan (R05)
+            // BR10 is Zhongxiao Fuxing (BL15)
+            // BR11 is Nanjing Fuxing (G16)
+            { id: 'BR13', name: '大直', line: 'BR', x: 680, y: 180, isTransfer: false }
+        ];
+
+        // Track Path Points for Train Smooth Movement
+        const TRACK_PATHS = {
+            'R': [
+                {x: 280, y: 80}, {x: 420, y: 120}, {x: 420, y: 200}, 
+                {x: 420, y: 280}, {x: 420, y: 360}, {x: 420, y: 480}, 
+                {x: 500, y: 480}, {x: 600, y: 480}
+            ],
+            'BL': [
+                {x: 180, y: 520}, {x: 320, y: 360}, {x: 420, y: 360}, 
+                {x: 600, y: 360}, {x: 780, y: 360}
+            ],
+            'G': [
+                {x: 420, y: 560}, {x: 420, y: 480}, {x: 320, y: 360}, 
+                {x: 420, y: 280}, {x: 520, y: 280}, {x: 600, y: 280}
+            ],
+            'O': [
+                {x: 420, y: 560}, {x: 500, y: 480}, {x: 520, y: 360}, 
+                {x: 520, y: 280}, {x: 420, y: 200}
+            ],
+            'BR': [
+                {x: 600, y: 480}, {x: 600, y: 360}, {x: 600, y: 280}, 
+                {x: 680, y: 180}
+            ]
+        };
+
+        // Active Trains Database
+        let trains = [];
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playBeep(freq = 880, duration = 0.1, type = 'sine') {
+            if (audioMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function startSirenSound() {
+            if (alertSirenInterval) clearInterval(alertSirenInterval);
+            alertSirenInterval = setInterval(() => {
+                if (isRedAlert && !audioMuted) {
+                    playBeep(960, 0.25, 'sawtooth');
+                    setTimeout(() => playBeep(640, 0.25, 'sawtooth'), 250);
+                }
+            }, 600);
+        }
+
+        function toggleAudioMute() {
+            audioMuted = !audioMuted;
+            const btn = document.getElementById('audio-toggle-btn');
+            const icon = document.getElementById('audio-icon');
+            if (audioMuted) {
+                btn.classList.add('text-slate-500');
+                btn.classList.remove('text-cyan-400');
+                icon.className = 'fa-solid fa-volume-xmark';
+                btn.innerHTML = `<i class="fa-solid fa-volume-xmark"></i> AUDIO: OFF`;
+            } else {
+                btn.classList.remove('text-slate-500');
+                btn.classList.add('text-cyan-400');
+                icon.className = 'fa-solid fa-volume-high';
+                btn.innerHTML = `<i class="fa-solid fa-volume-high"></i> AUDIO: ON`;
+                playBeep(1200, 0.1);
+            }
+        }
+
+        function renderMapStructure() {
+            const tracksGroup = document.getElementById('tracks-group');
+            const stationsGroup = document.getElementById('stations-group');
+
+            tracksGroup.innerHTML = '';
+            stationsGroup.innerHTML = '';
+
+            // Draw Tracks
+            Object.keys(TRACK_PATHS).forEach(lineKey => {
+                const path = TRACK_PATHS[lineKey];
+                let pathStr = `M ${path[0].x} ${path[0].y}`;
+                for (let i = 1; i < path.length; i++) {
+                    pathStr += ` L ${path[i].x} ${path[i].y}`;
+                }
+
+                // Outer Glow Track Line
+                const glowLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                glowLine.setAttribute('d', pathStr);
+                glowLine.setAttribute('stroke', LINES[lineKey].color);
+                glowLine.setAttribute('stroke-width', '8');
+                glowLine.setAttribute('fill', 'none');
+                glowLine.setAttribute('opacity', '0.25');
+                glowLine.setAttribute('filter', 'url(#glow)');
+                tracksGroup.appendChild(glowLine);
+
+                // Main Core Track Line
+                const coreLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                coreLine.setAttribute('d', pathStr);
+                coreLine.setAttribute('stroke', LINES[lineKey].color);
+                coreLine.setAttribute('stroke-width', '4');
+                coreLine.setAttribute('fill', 'none');
+                tracksGroup.appendChild(coreLine);
+            });
+
+            // Draw Stations
+            STATIONS.forEach(st => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'cursor-pointer group');
+                g.setAttribute('onclick', `inspectStation('${st.id}')`);
+
+                if (st.isTransfer) {
+                    // Transfer Ring Station
+                    const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    ring.setAttribute('cx', st.x);
+                    ring.setAttribute('cy', st.y);
+                    ring.setAttribute('r', '8');
+                    ring.setAttribute('fill', '#040914');
+                    ring.setAttribute('stroke', '#ffffff');
+                    ring.setAttribute('stroke-width', '3');
+                    ring.setAttribute('id', `st-circle-${st.id}`);
+                    g.appendChild(ring);
+                } else {
+                    // Regular Line Station
+                    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('cx', st.x);
+                    dot.setAttribute('cy', st.y);
+                    dot.setAttribute('r', '5');
+                    dot.setAttribute('fill', LINES[st.line].color);
+                    dot.setAttribute('stroke', '#ffffff');
+                    dot.setAttribute('stroke-width', '1.5');
+                    dot.setAttribute('id', `st-circle-${st.id}`);
+                    g.appendChild(dot);
+                }
+
+                // Station Label Text
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', st.x + 10);
+                text.setAttribute('y', st.y + 4);
+                text.setAttribute('fill', '#e2e8f0');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('font-family', 'Share Tech Mono, Noto Sans TC');
+                text.setAttribute('font-weight', 'bold');
+                text.textContent = `${st.name} (${st.id})`;
+                g.appendChild(text);
+
+                stationsGroup.appendChild(g);
+            });
+        }
+
+        function initInitialFleet() {
+            trains = [
+                { id: 'TR-101', line: 'R', progress: 0.1, dir: 1, speed: 0.0012, capacity: '82%', voltage: '752V' },
+                { id: 'TR-102', line: 'R', progress: 0.55, dir: -1, speed: 0.0010, capacity: '64%', voltage: '748V' },
+                { id: 'TR-201', line: 'BL', progress: 0.2, dir: 1, speed: 0.0015, capacity: '91%', voltage: '750V' },
+                { id: 'TR-202', line: 'BL', progress: 0.7, dir: -1, speed: 0.0014, capacity: '45%', voltage: '755V' },
+                { id: 'TR-301', line: 'G', progress: 0.3, dir: 1, speed: 0.0011, capacity: '78%', voltage: '749V' },
+                { id: 'TR-401', line: 'O', progress: 0.4, dir: 1, speed: 0.0013, capacity: '52%', voltage: '751V' },
+                { id: 'TR-501', line: 'BR', progress: 0.15, dir: 1, speed: 0.0016, capacity: '88%', voltage: '753V' }
+            ];
+        }
+
+        // Calculate Position on Polyline Path
+        function getPointOnPath(lineKey, progress) {
+            const points = TRACK_PATHS[lineKey];
+            const clampedProgress = Math.max(0, Math.min(1, progress));
+            const totalSegments = points.length - 1;
+            const scaled = clampedProgress * totalSegments;
+            const index = Math.floor(scaled);
+            const remainder = scaled - index;
+
+            if (index >= totalSegments) return points[totalSegments];
+
+            const p1 = points[index];
+            const p2 = points[index + 1];
+
+            return {
+                x: p1.x + (p2.x - p1.x) * remainder,
+                y: p1.y + (p2.y - p1.y) * remainder
+            };
+        }
+
+        // Main Train Movement Update loop with Anti-Collision Telemetry
+        function updateTrains() {
+            const trainsGroup = document.getElementById('trains-group');
+            trainsGroup.innerHTML = '';
+
+            const MIN_DISTANCE_THRESHOLD = 0.12; // Safety buffer (12% of total track distance)
+
+            trains.forEach((t, index) => {
+                let actualSpeed = t.speed * globalSpeedMultiplier;
+
+                if (isPlatformHold) {
+                    actualSpeed = 0; // Hold at platforms
+                }
+
+                // Anti-Collision Detection Logic (Collision Avoidance Telemetry)
+                trains.forEach((otherTrain, otherIdx) => {
+                    if (index !== otherIdx && t.line === otherTrain.line && t.dir === otherTrain.dir) {
+                        const dist = (otherTrain.progress - t.progress) * t.dir;
+                        if (dist > 0 && dist < MIN_DISTANCE_THRESHOLD) {
+                            // Too close! Slow down to match or hold distance
+                            actualSpeed *= 0.15;
+                        }
+                    }
+                });
+
+                // Move train
+                t.progress += actualSpeed * t.dir;
+
+                // Bounce direction at ends of track
+                if (t.progress >= 1) {
+                    t.progress = 1;
+                    t.dir = -1;
+                } else if (t.progress <= 0) {
+                    t.progress = 0;
+                    t.dir = 1;
+                }
+
+                const pos = getPointOnPath(t.line, t.progress);
+
+                // Render Train Group
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'cursor-pointer');
+                g.setAttribute('onclick', `inspectTrain('${t.id}')`);
+
+                // Train Outer Pulse
+                const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                pulse.setAttribute('cx', pos.x);
+                pulse.setAttribute('cy', pos.y);
+                pulse.setAttribute('r', '9');
+                pulse.setAttribute('fill', LINES[t.line].color);
+                pulse.setAttribute('opacity', '0.4');
+                pulse.setAttribute('class', 'animate-ping');
+                g.appendChild(pulse);
+
+                // Train Body Shape
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', pos.x - 7);
+                rect.setAttribute('y', pos.y - 7);
+                rect.setAttribute('width', '14');
+                rect.setAttribute('height', '14');
+                rect.setAttribute('rx', '3');
+                rect.setAttribute('fill', '#ffffff');
+                rect.setAttribute('stroke', LINES[t.line].color);
+                rect.setAttribute('stroke-width', '3');
+                g.appendChild(rect);
+
+                // Train ID Label
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', pos.x);
+                text.setAttribute('y', pos.y - 11);
+                text.setAttribute('fill', '#00f0ff');
+                text.setAttribute('font-size', '9');
+                text.setAttribute('font-weight', 'bold');
+                text.setAttribute('text-anchor', 'middle');
+                text.textContent = t.id;
+                g.appendChild(text);
+
+                trainsGroup.appendChild(g);
+            });
+        }
+
+        function initWaveform() {
+            const canvas = document.getElementById('waveformCanvas');
+            const ctx = canvas.getContext('2d');
+            let offset = 0;
+
+            function draw() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = isRedAlert ? '#ff0033' : '#00f0ff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                const slice = canvas.width / 50;
+                for (let i = 0; i <= 50; i++) {
+                    const x = i * slice;
+                    const freq = isRedAlert ? 0.3 : 0.1;
+                    const amp = isRedAlert ? 25 : 12;
+                    const y = (canvas.height / 2) + Math.sin(i * freq + offset) * amp + (Math.random() * 4 - 2);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                offset += isRedAlert ? 0.25 : 0.08;
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        function updateDataChaosStream() {
+            const container = document.getElementById('data-chaos-stream');
+            let text = '';
+            for (let i = 0; i < 5; i++) {
+                const hex1 = Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0').toUpperCase();
+                const hex2 = Math.floor(Math.random() * 0xFFFF).toString(16).padStart(4, '0').toUpperCase();
+                const bin = Math.floor(Math.random() * 255).toString(2).padStart(8, '0');
+                text += `> 0x${hex1} [${bin}] ATC_SYNC_${hex2}\n`;
+            }
+            container.textContent = text;
+
+            // Increment packet count
+            const pkt = document.getElementById('packet-counter');
+            pkt.textContent = `PKT: ${Math.floor(890000 + Math.random() * 10000)}`;
+        }
+
+        function dispatchTrain(lineKey) {
+            playBeep(1000, 0.1);
+            const trainNum = trains.length + 101;
+            const newTrain = {
+                id: `TR-${trainNum}`,
+                line: lineKey,
+                progress: 0.0,
+                dir: 1,
+                speed: 0.0012 + Math.random() * 0.0004,
+                capacity: `${Math.floor(40 + Math.random() * 50)}%`,
+                voltage: '750V'
+            };
+            trains.push(newTrain);
+            logEvent(`[DISPATCH] Fleet ${newTrain.id} injected into ${LINES[lineKey].name}`, 'text-cyan-400');
+            document.getElementById('active-trains-count').textContent = `${trains.length} FLEETS`;
+        }
+
+        function updateHeadway(val) {
+            document.getElementById('headway-val').textContent = `${val}s`;
+            document.getElementById('hud-headway').textContent = `${val} SEC`;
+            logEvent(`[HEADWAY] Line headway recalibrated to ${val} seconds`, 'text-yellow-400');
+        }
+
+        function togglePlatformHold() {
+            playBeep(600, 0.15);
+            isPlatformHold = !isPlatformHold;
+            const badge = document.getElementById('hold-status-text');
+            if (isPlatformHold) {
+                badge.className = 'text-[10px] px-1.5 py-0.5 rounded bg-red-500/20 border border-red-500 text-red-400 animate-pulse';
+                badge.textContent = 'ACTIVE HOLD';
+                logEvent(`[HOLD] ALL TRAINS HELD AT CURRENT PLATFORMS`, 'text-red-400');
+            } else {
+                badge.className = 'text-[10px] px-1.5 py-0.5 rounded bg-yellow-500/20 border border-yellow-500 text-yellow-300';
+                badge.textContent = 'READY';
+                logEvent(`[HOLD] Platform hold released. Resuming schedule.`, 'text-emerald-400');
+            }
+        }
+
+        function toggleSpeedOverride() {
+            playBeep(1400, 0.15);
+            isSpeedOverride = !isSpeedOverride;
+            const badge = document.getElementById('override-status-text');
+            const hud = document.getElementById('hud-override');
+            if (isSpeedOverride) {
+                globalSpeedMultiplier = 2.5;
+                badge.className = 'text-[10px] px-1.5 py-0.5 rounded bg-purple-500/40 border border-purple-400 text-purple-200 animate-pulse';
+                badge.textContent = 'MAX OVERRIDE';
+                hud.textContent = '250%';
+                hud.className = 'text-lg font-bold text-purple-400 font-orbitron animate-pulse';
+                logEvent(`[OVERRIDE] ATC SPEED OVERRIDE ENGAGED (250% SPEED)`, 'text-purple-400');
+            } else {
+                globalSpeedMultiplier = 1.0;
+                badge.className = 'text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 border border-purple-500 text-purple-300';
+                badge.textContent = 'DISABLED';
+                hud.textContent = 'OFF';
+                hud.className = 'text-lg font-bold text-slate-400 font-orbitron';
+                logEvent(`[OVERRIDE] ATC speed returned to normal protocol.`, 'text-slate-400');
+            }
+        }
+
+        function triggerAlert(msg) {
+            isRedAlert = true;
+            playBeep(440, 0.3, 'sawtooth');
+            startSirenSound();
+
+            document.getElementById('red-alert-overlay').classList.remove('hidden');
+            document.getElementById('app-body').classList.add('shake-active');
+
+            const badge = document.getElementById('system-status-badge');
+            badge.className = 'text-xs px-2 py-0.5 rounded bg-red-600 border border-red-300 text-white font-mono animate-bounce';
+            badge.textContent = 'CRITICAL RED ALERT';
+
+            // Pulsing Station Alarm on Map
+            const targetSt = STATIONS[Math.floor(Math.random() * STATIONS.length)];
+            const stCircle = document.getElementById(`st-circle-${targetSt.id}`);
+            if (stCircle) {
+                stCircle.setAttribute('class', 'station-alert');
+            }
+
+            logEvent(`[ALERT] ${msg}`, 'text-red-500 font-bold');
+        }
+
+        function clearAlert() {
+            isRedAlert = false;
+            if (alertSirenInterval) clearInterval(alertSirenInterval);
+
+            document.getElementById('red-alert-overlay').classList.add('hidden');
+            document.getElementById('app-body').classList.remove('shake-active');
+
+            const badge = document.getElementById('system-status-badge');
+            badge.className = 'text-xs px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500 text-emerald-400 font-mono';
+            badge.textContent = 'SYSTEM NORMAL';
+
+            // Reset all stations
+            STATIONS.forEach(st => {
+                const circle = document.getElementById(`st-circle-${st.id}`);
+                if (circle) circle.removeAttribute('class');
+            });
+
+            logEvent(`[SYSTEM] Emergency status cleared. All systems nominal.`, 'text-emerald-400');
+        }
+
+        function directorRedAlert() {
+            triggerAlert('CINEMATIC DIRECTORIAL TRIGGER: RED ALERT EMERGENCY OVERRIDE!');
+        }
+
+        function directorDispatchBurst() {
+            dispatchTrain('R');
+            dispatchTrain('BL');
+            dispatchTrain('G');
+        }
+
+        function directorShakeScreen() {
+            const body = document.getElementById('app-body');
+            body.classList.add('shake-active');
+            setTimeout(() => {
+                if (!isRedAlert) body.classList.remove('shake-active');
+            }, 2500);
+            logEvent(`[DIRECTOR] Screen Camera Shake Executed`, 'text-yellow-300');
+        }
+
+        function directorChaosMode() {
+            for (let i = 0; i < 8; i++) {
+                setTimeout(updateDataChaosStream, i * 100);
+            }
+            logEvent(`[DIRECTOR] High-frequency Data Burst Executed`, 'text-purple-300');
+        }
+
+        function directorMaxOverride() {
+            toggleSpeedOverride();
+        }
+
+        function directorReset() {
+            clearAlert();
+            if (isSpeedOverride) toggleSpeedOverride();
+            if (isPlatformHold) togglePlatformHold();
+            initInitialFleet();
+            logEvent(`[DIRECTOR] System Reset Completed`, 'text-cyan-300');
+        }
+
+        function inspectStation(id) {
+            playBeep(1200, 0.05);
+            const st = STATIONS.find(s => s.id === id);
+            const card = document.getElementById('map-info-card');
+            const title = document.getElementById('info-card-title');
+            const body = document.getElementById('info-card-body');
+
+            title.textContent = `STATION: ${st.name} (${st.id})`;
+            body.innerHTML = `
+                <div><span class="text-slate-400">Line:</span> <span class="text-white font-bold">${LINES[st.line].name}</span></div>
+                <div><span class="text-slate-400">Transfer Hub:</span> <span class="text-cyan-400">${st.isTransfer ? 'YES' : 'NO'}</span></div>
+                <div><span class="text-slate-400">Platform Status:</span> <span class="text-emerald-400">CLEAR / OPERATIONAL</span></div>
+                <div><span class="text-slate-400">Passenger Density:</span> <span class="text-yellow-400">${Math.floor(300 + Math.random() * 800)} PASSENGERS</span></div>
+                <div><span class="text-slate-400">CCTV Telemetry:</span> <span class="text-emerald-400">FEED ONLINE (CAM-${st.id})</span></div>
+            `;
+            card.classList.remove('hidden');
+        }
+
+        function inspectTrain(id) {
+            playBeep(1500, 0.05);
+            const tr = trains.find(t => t.id === id);
+            const card = document.getElementById('map-info-card');
+            const title = document.getElementById('info-card-title');
+            const body = document.getElementById('info-card-body');
+
+            title.textContent = `FLEET: ${tr.id}`;
+            body.innerHTML = `
+                <div><span class="text-slate-400">Assigned Line:</span> <span class="text-white font-bold">${LINES[tr.line].name}</span></div>
+                <div><span class="text-slate-400">Speed:</span> <span class="text-cyan-400">${(tr.speed * 50000 * globalSpeedMultiplier).toFixed(1)} km/h</span></div>
+                <div><span class="text-slate-400">Capacity Load:</span> <span class="text-yellow-400">${tr.capacity}</span></div>
+                <div><span class="text-slate-400">Traction Power:</span> <span class="text-emerald-400">${tr.voltage} DC</span></div>
+                <div><span class="text-slate-400">Collision Protocol:</span> <span class="text-emerald-400">CBTC ACTIVE</span></div>
+            `;
+            card.classList.remove('hidden');
+        }
+
+        function closeInfoCard() {
+            document.getElementById('map-info-card').classList.add('hidden');
+        }
+
+        function logEvent(msg, colorClass = 'text-slate-300') {
+            const container = document.getElementById('event-logs-container');
+            const now = new Date();
+            const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+
+            const item = document.createElement('div');
+            item.className = `border-b border-cyan-900/30 pb-1 ${colorClass}`;
+            item.innerHTML = `<span class="text-slate-500">[${timeStr}]</span> ${msg}`;
+
+            container.prepend(item);
+            if (container.children.length > 25) {
+                container.removeChild(container.lastChild);
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours().toString().padStart(2, '0');
+            const m = now.getMinutes().toString().padStart(2, '0');
+            const s = now.getSeconds().toString().padStart(2, '0');
+            const ms = Math.floor(now.getMilliseconds() / 10).toString().padStart(2, '0');
+            document.getElementById('clock-display').textContent = `${h}:${m}:${s}.${ms}`;
+        }
+
+        window.onload = function() {
+            renderMapStructure();
+            initInitialFleet();
+            initWaveform();
+
+            // Main Loops
+            setInterval(updateTrains, 50);
+            setInterval(updateClock, 30);
+            setInterval(updateDataChaosStream, 200);
+
+            logEvent(`[SYSTEM] METRO COMMAND CENTER INITIALIZED.`, 'text-emerald-400');
+            logEvent(`[CBTC] AUTOMATED TRAIN CONTROL (ATC) GoA4 ACTIVE.`, 'text-cyan-400');
+        };
+    </script>
+</body>
+</html>
