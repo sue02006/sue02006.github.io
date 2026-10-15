@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生作品 Showcase | 慈濟大學 經營管理學系</title>
+    
+    <!-- Google Fonts: Editorial Serif & Clean Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM: NEUMORPHISM (SOFT UI) & MACARON PASTEL COLOR PALETTE
+           ========================================================================== */
+        :root {
+            /* Macaron Pastel Palette */
+            --macaron-mint: #B7E4C7;
+            --macaron-mint-light: #D8F3DC;
+            --macaron-peach: #FFB7B2;
+            --macaron-peach-light: #FFDAC1;
+            --macaron-lavender: #D4C1EC;
+            --macaron-blue: #BAE6FD;
+            --macaron-blue-light: #E0F2FE;
+            --macaron-cream: #F4F7F6;
+            
+            /* Text & Neutral Colors */
+            --text-primary: #2D3748;
+            --text-secondary: #4A5568;
+            --text-muted: #718096;
+            --text-dark: #1A202C;
+            
+            /* Neumorphic Shadow Tokens */
+            --bg-neu: #F0F4F8;
+            --neu-shadow-extruded: 10px 10px 24px #d2dbe4, -10px -10px 24px #ffffff;
+            --neu-shadow-extruded-sm: 5px 5px 12px #d2dbe4, -5px -5px 12px #ffffff;
+            --neu-shadow-pressed: inset 5px 5px 10px #d2dbe4, inset -5px -5px 10px #ffffff;
+            --neu-shadow-hover: 14px 14px 28px #cbd5e1, -14px -14px 28px #ffffff;
+            
+            /* Borders & Radius */
+            --radius-pill: 50px;
+            --radius-lg: 28px;
+            --radius-md: 18px;
+            --radius-sm: 12px;
+            --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Reset & Global */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-neu);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .serif-editorial {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* ==========================================================================
+           2. NAVIGATION BAR
+           ========================================================================== */
+        .navbar {
+            padding: 20px 0;
+            background: rgba(240, 244, 248, 0.92);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--macaron-peach-light);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.8px;
+        }
+
+        .btn-back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: var(--radius-pill);
+            background: var(--bg-neu);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .btn-back-home:hover {
+            box-shadow: var(--neu-shadow-hover);
+            transform: translateX(-3px);
+            background: var(--macaron-mint-light);
+        }
+
+        /* ==========================================================================
+           3. EDITORIAL PAGE HEADER
+           ========================================================================== */
+        .page-header {
+            padding: 70px 0 40px 0;
+            text-align: center;
+        }
+
+        .editorial-vol {
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 16px;
+            background: var(--bg-neu);
+            box-shadow: var(--neu-shadow-pressed);
+            border-radius: var(--radius-pill);
+        }
+
+        .editorial-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        .editorial-title span {
+            background: linear-gradient(120deg, #10b981, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ==========================================================================
+           4. EMPTY STATE & SHOWCASE CONTENT
+           ========================================================================== */
+        .showcase-section {
+            flex: 1;
+            padding-bottom: 90px;
+        }
+
+        .empty-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 70px 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            max-width: 860px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .empty-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--macaron-cream);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            margin: 0 auto 28px auto;
+        }
+
+        .empty-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+        }
+
+        .empty-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            margin: 0 auto 36px auto;
+            line-height: 1.7;
+        }
+
+        .tags-list {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .macaron-badge {
+            padding: 10px 22px;
+            border-radius: var(--radius-pill);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            box-shadow: var(--neu-shadow-extruded-sm);
+        }
+
+        .b-mint { background: var(--macaron-mint-light); }
+        .b-peach { background: var(--macaron-peach-light); }
+        .b-blue { background: var(--macaron-blue); }
+        .b-lavender { background: var(--macaron-lavender); }
+
+        /* ==========================================================================
+           5. FOOTER
+           ========================================================================== */
+        .footer {
+            background: var(--bg-neu);
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo-box">
+                <div class="logo-badge">🌿</div>
+                <div class="logo-text">
+                    <h1>慈濟大學 經營管理學系</h1>
+                    <span>Dept. of Business Management, TCU</span>
+                </div>
+            </a>
+
+            <a href="index.html" class="btn-back-home">
+                ← 返回系所首頁
+            </a>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+        <div class="container">
+            <span class="editorial-vol">VOL. 02 / STUDENT PORTFOLIO</span>
+            <h1 class="editorial-title serif-editorial">學生專題 <span>成果作品集</span></h1>
+            <p style="color: var(--text-secondary); margin-top: 10px;">展現慈大經管學生的商業個案、門市創業與創意行銷成果</p>
+        </div>
+    </header>
+
+    <!-- SHOWCASE CONTENT AREA -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="empty-card">
+                <div class="empty-icon">🎨</div>
+                <h2 class="empty-title serif-editorial">學生作品集 籌備中</h2>
+                <p class="empty-desc">
+                    我們正精選整理歷屆優秀學生的「知足咖啡館經營專題」、「智慧商店 AI 新零售企劃」與「國際商業個案競賽成果」。最新作品集即將上架！
+                </p>
+
+                <div class="tags-list">
+                    <span class="macaron-badge b-mint">☕ 知足咖啡館營運實作</span>
+                    <span class="macaron-badge b-peach">📊 商業個案決策分析</span>
+                    <span class="macaron-badge b-blue">🛒 智慧零售數據專題</span>
+                    <span class="macaron-badge b-lavender">💡 品牌數位行銷企劃</span>
+                </div>
+
+                <div>
+                    <a href="index.html" class="btn-back-home" style="padding: 12px 28px; background: var(--macaron-mint);">
+                        ← 先回首頁逛逛
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            &copy; 2026 慈濟大學 經營管理學系 Department of Business Management, TCU. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

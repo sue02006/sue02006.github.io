@@ -65,6 +65,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Typography Presets */
         .serif-editorial {
             font-family: 'Playfair Display', 'Noto Serif TC', serif;
         }
@@ -147,6 +148,11 @@
             transform: translateY(-2px);
         }
 
+        .btn-neu:active {
+            box-shadow: var(--neu-shadow-pressed);
+            transform: translateY(0);
+        }
+
         .btn-neu-accent {
             background: var(--macaron-mint);
             color: var(--text-dark);
@@ -157,7 +163,9 @@
             background: #a3d9b5;
         }
 
-        /* NAVIGATION BAR */
+        /* ==========================================================================
+           2. NAVIGATION BAR
+           ========================================================================== */
         .navbar {
             position: fixed;
             top: 0;
@@ -185,7 +193,6 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            cursor: pointer;
         }
 
         .logo-badge {
@@ -216,7 +223,7 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 28px;
             list-style: none;
         }
 
@@ -227,7 +234,6 @@
             padding: 8px 16px;
             border-radius: var(--radius-pill);
             transition: var(--transition);
-            cursor: pointer;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -235,18 +241,15 @@
             box-shadow: var(--neu-shadow-pressed);
         }
 
-        .nav-link-btn {
-            background: var(--macaron-peach-light);
-            color: var(--text-dark);
-            box-shadow: var(--neu-shadow-extruded-sm);
-            font-weight: 700;
+        .mobile-hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
         }
 
-        .nav-link-btn:hover {
-            box-shadow: var(--neu-shadow-hover);
-        }
-
-        /* HERO MAGAZINE COVER */
+        /* ==========================================================================
+           3. HERO MAGAZINE COVER
+           ========================================================================== */
         .hero {
             padding-top: 150px;
             padding-bottom: 90px;
@@ -357,7 +360,9 @@
             line-height: 1.5;
         }
 
-        /* EDITORIAL ESSAY */
+        /* ==========================================================================
+           4. EDITORIAL ESSAY & DEPARTMENT INTRO (本系簡章)
+           ========================================================================== */
         .essay-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -413,7 +418,9 @@
             font-weight: 600;
         }
 
-        /* INTERACTIVE DNA QUIZ */
+        /* ==========================================================================
+           5. INTERACTIVE DNA QUIZ
+           ========================================================================== */
         .quiz-container {
             background: var(--bg-neu);
             border-radius: var(--radius-lg);
@@ -483,7 +490,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* FEATURE CARDS */
+        /* ==========================================================================
+           6. MACARON FEATURE CARDS (本系特色)
+           ========================================================================== */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -497,6 +506,7 @@
             padding: 36px 28px;
             transition: var(--transition);
             border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
         }
 
         .feature-card:hover {
@@ -529,7 +539,9 @@
             line-height: 1.65;
         }
 
-        /* FACILITIES SHOWCASE */
+        /* ==========================================================================
+           7. FACILITIES SHOWCASE & MODAL LIGHTBOX
+           ========================================================================== */
         .facility-tabs {
             display: flex;
             justify-content: center;
@@ -584,6 +596,7 @@
             overflow: hidden;
             box-shadow: var(--neu-shadow-pressed);
             margin-bottom: 20px;
+            position: relative;
         }
 
         .facility-img-box img {
@@ -623,7 +636,7 @@
             color: var(--text-dark);
         }
 
-        /* MODAL */
+        /* Modal Overlay & Card */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -689,7 +702,9 @@
             margin-bottom: 24px;
         }
 
-        /* ADMISSIONS & PATHWAYS */
+        /* ==========================================================================
+           8. ADMISSIONS & PATHWAYS
+           ========================================================================== */
         .pathways-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -722,64 +737,9 @@
             color: var(--text-dark);
         }
 
-        /* ------------------------------------------------------------------
-           2. 第二頁：學生作品集 (PORTFOLIO PAGE STYLES)
-        ------------------------------------------------------------------- */
-        #page-portfolio {
-            display: none;
-            padding-top: 140px;
-            padding-bottom: 100px;
-            min-height: 80vh;
-        }
-
-        .portfolio-empty-card {
-            background: var(--bg-neu);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--neu-shadow-extruded);
-            padding: 80px 40px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            max-width: 860px;
-            margin: 0 auto;
-        }
-
-        .portfolio-empty-icon {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: var(--macaron-cream);
-            box-shadow: var(--neu-shadow-extruded-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.6rem;
-            margin: 0 auto 28px auto;
-        }
-
-        .portfolio-empty-title {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--text-dark);
-            margin-bottom: 16px;
-        }
-
-        .portfolio-empty-desc {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            max-width: 580px;
-            margin: 0 auto 36px auto;
-            line-height: 1.7;
-        }
-
-        .portfolio-tags-preview {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-
-        /* FOOTER */
+        /* ==========================================================================
+           9. FOOTER & CONTACT
+           ========================================================================== */
         .footer {
             background: var(--bg-neu);
             padding-top: 80px;
@@ -859,403 +819,337 @@
             pointer-events: all;
         }
 
+        /* Responsive Breakpoints */
         @media (max-width: 992px) {
-            .hero-magazine-card, .essay-grid, .footer-card {
+            .hero-magazine-card {
+                grid-template-columns: 1fr;
+            }
+            .essay-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-card {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .quiz-options { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .mobile-hamburger {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
+    <!-- ==========================================
+         1. NAVIGATION BAR
+         ========================================== -->
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
-            <div class="logo-box" onclick="switchView('home')">
+            <a href="#" class="logo-box">
                 <div class="logo-badge">🌿</div>
                 <div class="logo-text">
                     <h1>慈濟大學 經營管理學系</h1>
                     <span>Dept. of Business Management, TCU</span>
                 </div>
-            </div>
+            </a>
 
-            <!-- 主頁面選單 (第一頁) -->
-            <ul class="nav-links" id="home-nav-links">
+            <ul class="nav-links">
                 <li><a href="#hero" class="nav-link active">封面 Focus</a></li>
                 <li><a href="#essay" class="nav-link">本系簡章</a></li>
                 <li><a href="#quiz" class="nav-link">DNA 測驗</a></li>
                 <li><a href="#features" class="nav-link">特色亮點</a></li>
                 <li><a href="#facilities" class="nav-link">實習場域</a></li>
                 <li><a href="#admissions" class="nav-link">招生進路</a></li>
-                <!-- 跳轉第二頁按鈕 -->
-                <li>
-                    <span class="nav-link nav-link-btn" onclick="switchView('portfolio')">
-                        🎨 學生作品 Showcase ➔
-                    </span>
-                </li>
             </ul>
 
-            <!-- 作品頁選單 (第二頁專用) -->
-            <div id="portfolio-nav-links" style="display:none;">
-                <span class="btn-neu" onclick="switchView('home')" style="padding: 10px 22px; font-size:0.9rem;">
-                    ← 返回系所首頁
-                </span>
-            </div>
-
-            <a href="#admissions" id="cta-btn" class="btn-neu btn-neu-accent" style="padding: 10px 24px; font-size: 0.88rem;" onclick="switchView('home')">
+            <a href="#admissions" class="btn-neu btn-neu-accent" style="padding: 10px 24px; font-size: 0.88rem;">
                 入學指引
             </a>
         </div>
     </nav>
 
-    <!-- ==========================================================================
-         第一頁：系所主頁內容 (PAGE: HOME)
-         ========================================================================== -->
-    <div id="page-home">
-        <!-- HERO MAGAZINE COVER -->
-        <section class="hero" id="hero">
-            <div class="container">
-                <div class="hero-magazine-card">
-                    <div>
-                        <div class="hero-magazine-tag">
-                            ✨ VOL. 01 / 2025/2026 FRESHMAN GUIDE
-                        </div>
-                        <h1 class="hero-title serif-editorial">
-                            Flip Your Future.<br>
-                            翻轉商業視野，<br>
-                            翻轉你的未來。
-                        </h1>
-                        <p class="hero-subtitle">
-                            慈濟大學經營管理學系結合頂尖個案教學、實體門市經營與智慧零售實戰，培養兼具人文關懷與戰略眼光的現代商業領袖。
-                        </p>
-
-                        <div class="hero-badge-list">
-                            <span class="macaron-badge b-mint">個案教學研討</span>
-                            <span class="macaron-badge b-peach">知足咖啡館營運</span>
-                            <span class="macaron-badge b-lavender">智慧無人商店</span>
-                            <span class="macaron-badge b-blue">國際商務視野</span>
-                        </div>
-
-                        <div style="display:flex; gap:16px; flex-wrap:wrap;">
-                            <span class="btn-neu btn-neu-accent" onclick="switchView('portfolio')">
-                                跳轉至學生作品集 ➔
-                            </span>
-                            <a href="#quiz" class="btn-neu">
-                                30秒測驗你的商管 DNA
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="hero-cover-img-wrapper">
-                        <div class="hero-img-frame">
-                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Students Discussion">
-                        </div>
-                        <div class="hero-quote-card">
-                            <p class="serif-editorial">“理論與實務並重，下課直接開箱實體經營場域！”</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- EDITORIAL ESSAY (本系簡章) -->
-        <section class="section-padding" id="essay">
-            <div class="container">
-                <div class="editorial-header text-center" style="text-align: center;">
-                    <span class="editorial-vol">VOL. 02 / DEPT ESSAY</span>
-                    <h2 class="editorial-title serif-editorial">本系簡介與 <span>辦學理念</span></h2>
-                    <p class="editorial-desc" style="margin: 10px auto 0 auto;">培養具備專業素養、永續戰略與人文溫度的未來商業領袖</p>
-                </div>
-
-                <div class="essay-grid">
-                    <div class="essay-card">
-                        <h3 class="serif-editorial" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">
-                            打造帶得走的終身商業競爭力
-                        </h3>
-                        <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 16px;">
-                            慈濟大學經營管理學系以「智慧經營」與「人文永續」為核心，打破傳統單向講授教學。我們引進哈佛式個案教學研討，鼓勵學生在課堂中進行邏輯思辨、戰略決策與團隊溝通。
-                        </p>
-                        <div class="pull-quote serif-editorial">
-                            「我們不只傳授管理理論，更提供真實的實體門市與無人商店，讓你在大學期間就擁有完整的創業與營運經驗。」
-                        </div>
-                        <p style="font-size: 1.05rem; color: var(--text-secondary);">
-                            結合校內「知足咖啡館」實習場域與「智慧商店 Lab」，學生能親自操作品牌行銷、財務損益與 POS 數據分析，接軌全球 ESG 永續經營浪潮。
-                        </p>
-                    </div>
-
-                    <div class="sidebar-neu-box">
-                        <h4 class="serif-editorial" style="font-size:1.2rem; margin-bottom:20px; font-weight:800;">關鍵數據亮點</h4>
-                        
-                        <div class="stat-item" style="background: var(--macaron-mint-light);">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">實務場域實習機會</span>
-                        </div>
-
-                        <div class="stat-item" style="background: var(--macaron-peach-light);">
-                            <span class="stat-number">雙軌</span>
-                            <span class="stat-label">導師與個案教學模組</span>
-                        </div>
-
-                        <div class="stat-item" style="background: var(--macaron-blue-light);">
-                            <span class="stat-number">多元</span>
-                            <span class="stat-label">國際海外交換交流補助</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- INTERACTIVE DNA QUIZ -->
-        <section class="section-padding" id="quiz">
-            <div class="container">
-                <div class="editorial-header text-center" style="text-align: center;">
-                    <span class="editorial-vol">VOL. 03 / INTERACTIVE QUIZ</span>
-                    <h2 class="editorial-title serif-editorial">測測看！你的 <span>商管 DNA 天生配</span></h2>
-                    <p class="editorial-desc" style="margin: 10px auto 0 auto;">點擊最符合你性格的描述，快速找到你的命定學習模組！</p>
-                </div>
-
-                <div class="quiz-container">
-                    <div class="quiz-options">
-                        <button class="quiz-btn" onclick="runQuiz(1, this)">
-                            <div class="quiz-icon">🎨</div>
-                            <div>
-                                <h4 style="font-size:1rem; font-weight:800;">品牌創意與社群行銷</h4>
-                                <p style="font-size:0.85rem; color:var(--text-muted);">喜歡潮流品牌、包裝文案與文創行銷</p>
-                            </div>
-                        </button>
-
-                        <button class="quiz-btn" onclick="runQuiz(2, this)">
-                            <div class="quiz-icon">☕</div>
-                            <div>
-                                <h4 style="font-size:1rem; font-weight:800;">門市營運與實體創業</h4>
-                                <p style="font-size:0.85rem; color:var(--text-muted);">夢想開咖啡館、經營連鎖門市與創業</p>
-                            </div>
-                        </button>
-
-                        <button class="quiz-btn" onclick="runQuiz(3, this)">
-                            <div class="quiz-icon">🤖</div>
-                            <div>
-                                <h4 style="font-size:1rem; font-weight:800;">智慧零售與數據分析</h4>
-                                <p style="font-size:0.85rem; color:var(--text-muted);">關注無人商店、科技新零售與數據決策</p>
-                            </div>
-                        </button>
-
-                        <button class="quiz-btn" onclick="runQuiz(4, this)">
-                            <div class="quiz-icon">🌍</div>
-                            <div>
-                                <h4 style="font-size:1rem; font-weight:800;">高階戰略與國際商務</h4>
-                                <p style="font-size:0.85rem; color:var(--text-muted);">嚮往跨國個案研討與國際談判決策</p>
-                            </div>
-                        </button>
-                    </div>
-
-                    <div class="quiz-result" id="quizResult">
-                        <h3 id="quizTitle" style="font-size:1.2rem; font-weight:800; color:var(--text-dark); margin-bottom:6px;"></h3>
-                        <p id="quizDesc" style="font-size:0.95rem; color:var(--text-secondary);"></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CORE FEATURES -->
-        <section class="section-padding" id="features">
-            <div class="container">
-                <div class="editorial-header text-center" style="text-align: center;">
-                    <span class="editorial-vol">VOL. 04 / CORE FEATURES</span>
-                    <h2 class="editorial-title serif-editorial">慈大經管 <span>四大特色亮點</span></h2>
-                    <p class="editorial-desc" style="margin: 10px auto 0 auto;">翻轉商業教育，培育適應未來的全方位商管人才</p>
-                </div>
-
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon-badge" style="background:var(--macaron-mint-light);">📖</div>
-                        <h3 class="serif-editorial">翻轉教育與個案教學</h3>
-                        <p>導入哈佛式個案討論，以經典商業案例為基礎，訓練學生獨立思考、簡報提案與高階決策溝通。</p>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon-badge" style="background:var(--macaron-peach-light);">☕</div>
-                        <h3 class="serif-editorial">行銷流通與知足咖啡館</h3>
-                        <p>擁有一流外場行銷實習場域，學生親自參與知足咖啡館的真實營運、定價策略與服務品質管理。</p>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon-badge" style="background:var(--macaron-blue-light);">🛒</div>
-                        <h3 class="serif-editorial">智慧商店與無人零售</h3>
-                        <p>建置無人商店虛擬情境實習 Lab，讓學生提早適應 AI 新零售、自助結帳與顧客數據整合。</p>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-icon-badge" style="background:var(--macaron-lavender);">🗣️</div>
-                        <h3 class="serif-editorial">簡報溝通與國際視野</h3>
-                        <p>配備專業影音投影簡報教室與國際商務研討空間，培養具備國際流利溝通與自信表達之商管專才。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FACILITIES SHOWCASE -->
-        <section class="section-padding" id="facilities">
-            <div class="container">
-                <div class="editorial-header text-center" style="text-align: center;">
-                    <span class="editorial-vol">VOL. 05 / HIGH-TECH LABS</span>
-                    <h2 class="editorial-title serif-editorial">特色實習 <span>專業教室場域</span></h2>
-                    <p class="editorial-desc" style="margin: 10px auto 0 auto;">點擊卡片開箱頂級實務場域與設備</p>
-                </div>
-
-                <div class="facility-tabs">
-                    <button class="tab-pill active" onclick="filterFacilities('all', this)">全部場域</button>
-                    <button class="tab-pill" onclick="filterFacilities('retail', this)">門市實用場域</button>
-                    <button class="tab-pill" onclick="filterFacilities('seminar', this)">研討簡報教室</button>
-                </div>
-
-                <div class="facility-grid">
-                    <div class="facility-card" data-category="seminar" onclick="openFacilityModal(1)">
-                        <div class="facility-img-box">
-                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Case Study Room">
-                        </div>
-                        <div class="facility-info">
-                            <h3 class="serif-editorial">個案教學研討室</h3>
-                            <p>以翻轉教育理論設計，弧形梯形座位促進高頻率課堂互動研討。</p>
-                            <span class="facility-cta">探索詳細介紹 →</span>
-                        </div>
-                    </div>
-
-                    <div class="facility-card" data-category="retail" onclick="openFacilityModal(2)">
-                        <div class="facility-img-box">
-                            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="Satisfied Cafe">
-                        </div>
-                        <div class="facility-info">
-                            <h3 class="serif-editorial">經營管理學系實習教室 (知足咖啡館)</h3>
-                            <p>外場行銷體驗實習場域，配備高規專業餐飲設備與真實營運流程。</p>
-                            <span class="facility-cta">探索詳細介紹 →</span>
-                        </div>
-                    </div>
-
-                    <div class="facility-card" data-category="retail" onclick="openFacilityModal(3)">
-                        <div class="facility-img-box">
-                            <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=800&q=80" alt="Smart Store">
-                        </div>
-                        <div class="facility-info">
-                            <h3 class="serif-editorial">智慧商店 (Smart Store)</h3>
-                            <p>建置虛擬零售情境，帶領學生體驗 AI 與無人商店管理趨勢。</p>
-                            <span class="facility-cta">探索詳細介紹 →</span>
-                        </div>
-                    </div>
-
-                    <div class="facility-card" data-category="seminar" onclick="openFacilityModal(4)">
-                        <div class="facility-img-box">
-                            <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80" alt="International Room">
-                        </div>
-                        <div class="facility-info">
-                            <h3 class="serif-editorial">國際商務教室</h3>
-                            <p>安靜舒適的高階研習空間，專為跨國個案與國際商務談判設計。</p>
-                            <span class="facility-cta">探索詳細介紹 →</span>
-                        </div>
-                    </div>
-
-                    <div class="facility-card" data-category="seminar" onclick="openFacilityModal(5)">
-                        <div class="facility-img-box">
-                            <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80" alt="Presentation Room">
-                        </div>
-                        <div class="facility-info">
-                            <h3 class="serif-editorial">簡報與溝通教室</h3>
-                            <p>搭載專業影音簡報投影設備，培養全方位職場簡報與表達魅力。</p>
-                            <span class="facility-cta">探索詳細介紹 →</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ADMISSIONS & PATHWAYS -->
-        <section class="section-padding" id="admissions">
-            <div class="container">
-                <div class="editorial-header text-center" style="text-align: center;">
-                    <span class="editorial-vol">VOL. 06 / ADMISSIONS & CAREERS</span>
-                    <h2 class="editorial-title serif-editorial">招生管道與 <span>未來發展</span></h2>
-                    <p class="editorial-desc" style="margin: 10px auto 0 auto;">多元入學管道，開啟你精采的大學篇章</p>
-                </div>
-
-                <div class="pathways-grid">
-                    <div class="pathway-card" style="border-top: 4px solid var(--macaron-mint);">
-                        <div class="pathway-header">
-                            <span style="font-size:1.5rem;">🌟</span>
-                            <h4 class="serif-editorial">繁星推薦</h4>
-                        </div>
-                        <p style="font-size:0.92rem; color:var(--text-secondary);">重視高中平時校內成績，提供優厚入學獎學金，鼓勵優秀高中生選填。</p>
-                    </div>
-
-                    <div class="pathway-card" style="border-top: 4px solid var(--macaron-peach);">
-                        <div class="pathway-header">
-                            <span style="font-size:1.5rem;">📄</span>
-                            <h4 class="serif-editorial">申請入學</h4>
-                        </div>
-                        <p style="font-size:0.92rem; color:var(--text-secondary);">採計學習歷程檔案與綜合面試，重視對商業經營與團隊溝通之熱忱。</p>
-                    </div>
-
-                    <div class="pathway-card" style="border-top: 4px solid var(--macaron-blue);">
-                        <div class="pathway-header">
-                            <span style="font-size:1.5rem;">✏️</span>
-                            <h4 class="serif-editorial">分發入學</h4>
-                        </div>
-                        <p style="font-size:0.92rem; color:var(--text-secondary);">依據分科測驗及學測成績登記分發，歡迎全台高中職畢業生報考。</p>
-                    </div>
-
-                    <div class="pathway-card" style="border-top: 4px solid var(--macaron-lavender);">
-                        <div class="pathway-header">
-                            <span style="font-size:1.5rem;">🌐</span>
-                            <h4 class="serif-editorial">國際學生管道</h4>
-                        </div>
-                        <p style="font-size:0.92rem; color:var(--text-secondary);">提供完善的國際學生獎助學金與專屬學習輔導機制。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- ==========================================================================
-         第二頁：學生作品專區獨立視圖 (PAGE: PORTFOLIO / SHOWCASE)
-         ========================================================================== -->
-    <div id="page-portfolio">
+    <!-- ==========================================
+         2. HERO MAGAZINE COVER
+         ========================================== -->
+    <section class="hero" id="hero">
         <div class="container">
-            <div class="editorial-header text-center" style="text-align: center;">
-                <span class="editorial-vol">VOL. 02 / STUDENT PORTFOLIO</span>
-                <h1 class="editorial-title serif-editorial">學生專題 <span>作品成果展</span></h1>
-                <p class="editorial-desc" style="margin: 10px auto 0 auto;">展現慈濟大學經管學生的實體創業、個案分析與品牌行銷成果</p>
-            </div>
+            <div class="hero-magazine-card">
+                <div>
+                    <div class="hero-magazine-tag">
+                        ✨ VOL. 01 / 2025/2026 FRESHMAN GUIDE
+                    </div>
+                    <h1 class="hero-title serif-editorial">
+                        Flip Your Future.<br>
+                        翻轉商業視野，<br>
+                        翻轉你的未來。
+                    </h1>
+                    <p class="hero-subtitle">
+                        慈濟大學經營管理學系結合頂尖個案教學、實體門市經營與智慧零售實戰，培養兼具人文關懷與戰略眼光的現代商業領袖。
+                    </p>
 
-            <!-- 學生作品籌備中 Empty State Card -->
-            <div class="portfolio-empty-card">
-                <div class="portfolio-empty-icon">🎨</div>
-                <h2 class="portfolio-empty-title serif-editorial">學生作品集 籌備中</h2>
-                <p class="portfolio-empty-desc">
-                    我們正精選整理歷屆優秀學生的「知足咖啡館經營專題」、「智慧商店 AI 新零售企劃」與「國際商業個案競賽成果」。最新作品集即將上架！
-                </p>
+                    <div class="hero-badge-list">
+                        <span class="macaron-badge b-mint">個案教學研討</span>
+                        <span class="macaron-badge b-peach">知足咖啡館營運</span>
+                        <span class="macaron-badge b-lavender">智慧無人商店</span>
+                        <span class="macaron-badge b-blue">國際商務視野</span>
+                    </div>
 
-                <div class="portfolio-tags-preview">
-                    <span class="macaron-badge b-mint">☕ 知足咖啡館營運實作</span>
-                    <span class="macaron-badge b-peach">📊 商業個案決策分析</span>
-                    <span class="macaron-badge b-blue">🛒 智慧零售數據專題</span>
-                    <span class="macaron-badge b-lavender">💡 品牌數位行銷企劃</span>
+                    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                        <a href="#admissions" class="btn-neu btn-neu-accent">
+                            立即探索招生管道 →
+                        </a>
+                        <a href="#quiz" class="btn-neu">
+                            30秒測驗你的商管 DNA
+                        </a>
+                    </div>
                 </div>
 
-                <div>
-                    <span class="btn-neu btn-neu-accent" onclick="switchView('home')">
-                        ← 返回系所介紹首頁
-                    </span>
+                <div class="hero-cover-img-wrapper">
+                    <div class="hero-img-frame">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Students Discussion">
+                    </div>
+                    <div class="hero-quote-card">
+                        <p class="serif-editorial">“理論與實務並重，下課直接開箱實體經營場域！”</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- MODAL LIGHTBOX -->
+    <!-- ==========================================
+         3. EDITORIAL ESSAY (本系簡章)
+         ========================================== -->
+    <section class="section-padding" id="essay">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 02 / DEPT ESSAY</span>
+                <h2 class="editorial-title serif-editorial">本系簡介與 <span>辦學理念</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">培養具備專業素養、永續戰略與人文溫度的未來商業領袖</p>
+            </div>
+
+            <div class="essay-grid">
+                <div class="essay-card">
+                    <h3 class="serif-editorial" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">
+                        打造帶得走的終身商業競爭力
+                    </h3>
+                    <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 16px;">
+                        慈濟大學經營管理學系以「智慧經營」與「人文永續」為核心，打破傳統單向講授教學。我們引進哈佛式個案教學研討，鼓勵學生在課堂中進行邏輯思辨、戰略決策與團隊溝通。
+                    </p>
+                    <div class="pull-quote serif-editorial">
+                        「我們不只傳授管理理論，更提供真實的實體門市與無人商店，讓你在大學期間就擁有完整的創業與營運經驗。」
+                    </div>
+                    <p style="font-size: 1.05rem; color: var(--text-secondary);">
+                        結合校內「知足咖啡館」實習場域與「智慧商店 Lab」，學生能親自操作品牌行銷、財務損益與 POS 數據分析，接軌全球 ESG 永續經營浪潮。
+                    </p>
+                </div>
+
+                <div class="sidebar-neu-box">
+                    <h4 class="serif-editorial" style="font-size:1.2rem; margin-bottom:20px; font-weight:800;">關鍵數據亮點</h4>
+                    
+                    <div class="stat-item" style="background: var(--macaron-mint-light);">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">實務場域實習機會</span>
+                    </div>
+
+                    <div class="stat-item" style="background: var(--macaron-peach-light);">
+                        <span class="stat-number">雙軌</span>
+                        <span class="stat-label">導師與個案教學模組</span>
+                    </div>
+
+                    <div class="stat-item" style="background: var(--macaron-blue-light);">
+                        <span class="stat-number">多元</span>
+                        <span class="stat-label">國際海外交換交流補助</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         4. INTERACTIVE DNA QUIZ
+         ========================================== -->
+    <section class="section-padding" id="quiz">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 03 / INTERACTIVE QUIZ</span>
+                <h2 class="editorial-title serif-editorial">測測看！你的 <span>商管 DNA 天生配</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">點擊最符合你性格的描述，快速找到你的命定學習模組！</p>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="runQuiz(1, this)">
+                        <div class="quiz-icon">🎨</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">品牌創意與社群行銷</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">喜歡潮流品牌、包裝文案與文創行銷</p>
+                        </div>
+                    </button>
+
+                    <button class="quiz-btn" onclick="runQuiz(2, this)">
+                        <div class="quiz-icon">☕</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">門市營運與實體創業</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">夢想開咖啡館、經營連鎖門市與創業</p>
+                        </div>
+                    </button>
+
+                    <button class="quiz-btn" onclick="runQuiz(3, this)">
+                        <div class="quiz-icon">🤖</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">智慧零售與數據分析</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">關注無人商店、科技新零售與數據決策</p>
+                        </div>
+                    </button>
+
+                    <button class="quiz-btn" onclick="runQuiz(4, this)">
+                        <div class="quiz-icon">🌍</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">高階戰略與國際商務</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">嚮往跨國個案研討與國際談判決策</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="quiz-result" id="quizResult">
+                    <h3 id="quizTitle" style="font-size:1.2rem; font-weight:800; color:var(--text-dark); margin-bottom:6px;"></h3>
+                    <p id="quizDesc" style="font-size:0.95rem; color:var(--text-secondary);"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         5. MACARON FEATURE CARDS (本系特色)
+         ========================================== -->
+    <section class="section-padding" id="features">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 04 / CORE FEATURES</span>
+                <h2 class="editorial-title serif-editorial">慈大經管 <span>四大特色亮點</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">翻轉商業教育，培育適應未來的全方位商管人才</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-mint-light);">📖</div>
+                    <h3 class="serif-editorial">翻轉教育與個案教學</h3>
+                    <p>導入哈佛式個案討論，以經典商業案例為基礎，訓練學生獨立思考、簡報提案與高階決策溝通。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-peach-light);">☕</div>
+                    <h3 class="serif-editorial">行銷流通與知足咖啡館</h3>
+                    <p>擁有一流外場行銷實習場域，學生親自參與知足咖啡館的真實營運、定價策略與服務品質管理。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-blue-light);">🛒</div>
+                    <h3 class="serif-editorial">智慧商店與無人零售</h3>
+                    <p>建置無人商店虛擬情境實習 Lab，讓學生提早適應 AI 新零售、自助結帳與顧客數據整合。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-lavender);">🗣️</div>
+                    <h3 class="serif-editorial">簡報溝通與國際視野</h3>
+                    <p>配備專業影音投影簡報教室與國際商務研討空間，培養具備國際流利溝通與自信表達之商管專才。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         6. FACILITIES SHOWCASE & MODAL LIGHTBOX
+         ========================================== -->
+    <section class="section-padding" id="facilities">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 05 / HIGH-TECH LABS</span>
+                <h2 class="editorial-title serif-editorial">特色實習 <span>專業教室場域</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">點擊卡片開箱頂級實務場域與設備</p>
+            </div>
+
+            <div class="facility-tabs">
+                <button class="tab-pill active" onclick="filterFacilities('all', this)">全部場域</button>
+                <button class="tab-pill" onclick="filterFacilities('retail', this)">門市實用場域</button>
+                <button class="tab-pill" onclick="filterFacilities('seminar', this)">研討簡報教室</button>
+            </div>
+
+            <div class="facility-grid">
+                <!-- Facility 1 -->
+                <div class="facility-card" data-category="seminar" onclick="openFacilityModal(1)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Case Study Room">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">個案教學研討室</h3>
+                        <p>以翻轉教育理論設計，弧形梯形座位促進高頻率課堂互動研討。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 2 -->
+                <div class="facility-card" data-category="retail" onclick="openFacilityModal(2)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="Satisfied Cafe">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">經營管理學系實習教室 (知足咖啡館)</h3>
+                        <p>外場行銷體驗實習場域，配備高規專業餐飲設備與真實營運流程。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 3 -->
+                <div class="facility-card" data-category="retail" onclick="openFacilityModal(3)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=800&q=80" alt="Smart Store">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">智慧商店 (Smart Store)</h3>
+                        <p>建置虛擬零售情境，帶領學生體驗 AI 與無人商店管理趨勢。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 4 -->
+                <div class="facility-card" data-category="seminar" onclick="openFacilityModal(4)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80" alt="International Room">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">國際商務教室</h3>
+                        <p>安靜舒適的高階研習空間，專為跨國個案與國際商務談判設計。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 5 -->
+                <div class="facility-card" data-category="seminar" onclick="openFacilityModal(5)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80" alt="Presentation Room">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">簡報與溝通教室</h3>
+                        <p>搭載專業影音簡報投影設備，培養全方位職場簡報與表達魅力。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Box -->
     <div class="modal-overlay" id="facilityModal">
         <div class="modal-card">
             <div class="modal-close" onclick="closeFacilityModal()">&times;</div>
@@ -1266,7 +1160,56 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
+    <!-- ==========================================
+         7. ADMISSIONS & PATHWAYS
+         ========================================== -->
+    <section class="section-padding" id="admissions">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 06 / ADMISSIONS & CAREERS</span>
+                <h2 class="editorial-title serif-editorial">招生管道與 <span>未來發展</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">多元入學管道，開啟你精采的大學篇章</p>
+            </div>
+
+            <div class="pathways-grid">
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-mint);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">🌟</span>
+                        <h4 class="serif-editorial">繁星推薦</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">重視高中平時校內成績，提供優厚入學獎學金，鼓勵優秀高中生選填。</p>
+                </div>
+
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-peach);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">📄</span>
+                        <h4 class="serif-editorial">申請入學</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">採計學習歷程檔案與綜合面試，重視對商業經營與團隊溝通之熱忱。</p>
+                </div>
+
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-blue);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">✏️</span>
+                        <h4 class="serif-editorial">分發入學</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">依據分科測驗及學測成績登記分發，歡迎全台高中職畢業生報考。</p>
+                </div>
+
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-lavender);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">🌐</span>
+                        <h4 class="serif-editorial">國際學生管道</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">提供完善的國際學生獎助學金與專屬學習輔導機制。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         8. FOOTER & CONTACT
+         ========================================== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-card">
@@ -1279,11 +1222,11 @@
                 <div>
                     <h3 class="footer-links-head serif-editorial">快速導航</h3>
                     <ul class="footer-links">
-                        <li><a href="#" onclick="switchView('home')">封面焦點</a></li>
-                        <li><a href="#essay" onclick="switchView('home')">本系簡章</a></li>
-                        <li><a href="#quiz" onclick="switchView('home')">適性測驗</a></li>
-                        <li><a href="#facilities" onclick="switchView('home')">特色實習教室</a></li>
-                        <li><a href="#" onclick="switchView('portfolio')">學生作品 Showcase ➔</a></li>
+                        <li><a href="#hero">封面焦點</a></li>
+                        <li><a href="#essay">本系簡章</a></li>
+                        <li><a href="#quiz">適性測驗</a></li>
+                        <li><a href="#features">特色亮點</a></li>
+                        <li><a href="#facilities">特色實習教室</a></li>
                     </ul>
                 </div>
 
@@ -1304,45 +1247,16 @@
         </div>
     </footer>
 
+    <!-- Back to top floating button -->
     <div class="back-top-btn" id="backTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">
         ↑
     </div>
 
-    <!-- JAVASCRIPT CONTROLLERS -->
+    <!-- ==========================================
+         JAVASCRIPT INTERACTIVITIES
+         ========================================== -->
     <script>
-        // 頁面切換控制核心 (Single-Page Multi-View Routing)
-        function switchView(viewName) {
-            const pageHome = document.getElementById('page-home');
-            const pagePortfolio = document.getElementById('page-portfolio');
-            const homeNavLinks = document.getElementById('home-nav-links');
-            const portfolioNavLinks = document.getElementById('portfolio-nav-links');
-
-            if (viewName === 'portfolio') {
-                pageHome.style.display = 'none';
-                pagePortfolio.style.display = 'block';
-                homeNavLinks.style.display = 'none';
-                portfolioNavLinks.style.display = 'block';
-                window.location.hash = 'portfolio';
-            } else {
-                pageHome.style.display = 'block';
-                pagePortfolio.style.display = 'none';
-                homeNavLinks.style.display = 'flex';
-                portfolioNavLinks.style.display = 'none';
-                if(window.location.hash === '#portfolio') {
-                    history.pushState("", document.title, window.location.pathname + window.location.search);
-                }
-            }
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        // 初始化檢查 URL Hash
-        window.addEventListener('load', () => {
-            if (window.location.hash === '#portfolio') {
-                switchView('portfolio');
-            }
-        });
-
-        // Navbar 滾動效果
+        // Navbar Scrolled Effect & Back To Top
         const navbar = document.getElementById('navbar');
         const backTopBtn = document.getElementById('backTopBtn');
 
@@ -1356,7 +1270,7 @@
             }
         });
 
-        // 測驗控制
+        // Quiz Logic
         function runQuiz(type, btn) {
             const btns = document.querySelectorAll('.quiz-btn');
             btns.forEach(b => b.classList.remove('active'));
@@ -1383,7 +1297,7 @@
             }
         }
 
-        // 場域篩選
+        // Facility Filter Logic
         function filterFacilities(category, btn) {
             const pills = document.querySelectorAll('.tab-pill');
             pills.forEach(p => p.classList.remove('active'));
@@ -1399,7 +1313,7 @@
             });
         }
 
-        // Modal 快顯視窗
+        // Facility Modal Lightbox
         const facilityData = {
             1: {
                 title: "個案教學研討室",
