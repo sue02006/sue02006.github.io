@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>慈濟大學 經營管理學系 | Dept. of Business Management - TCU</title>
+    
+    <!-- Google Fonts: Editorial Serif & Clean Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM: NEUMORPHISM (SOFT UI) & MACARON PASTEL COLOR PALETTE
+           ========================================================================== */
+        :root {
+            /* Macaron Pastel Palette */
+            --macaron-mint: #B7E4C7;
+            --macaron-mint-light: #D8F3DC;
+            --macaron-peach: #FFB7B2;
+            --macaron-peach-light: #FFDAC1;
+            --macaron-lavender: #D4C1EC;
+            --macaron-lavender-light: #E2F0CB;
+            --macaron-blue: #BAE6FD;
+            --macaron-blue-light: #E0F2FE;
+            --macaron-cream: #F4F7F6;
+            
+            /* Text & Neutral Colors */
+            --text-primary: #2D3748;
+            --text-secondary: #4A5568;
+            --text-muted: #718096;
+            --text-dark: #1A202C;
+            
+            /* Neumorphic Shadow Tokens */
+            --bg-neu: #F0F4F8;
+            --neu-flat: #F0F4F8;
+            --neu-shadow-extruded: 10px 10px 24px #d2dbe4, -10px -10px 24px #ffffff;
+            --neu-shadow-extruded-sm: 5px 5px 12px #d2dbe4, -5px -5px 12px #ffffff;
+            --neu-shadow-pressed: inset 5px 5px 10px #d2dbe4, inset -5px -5px 10px #ffffff;
+            --neu-shadow-hover: 14px 14px 28px #cbd5e1, -14px -14px 28px #ffffff;
+            
+            /* Borders & Radius */
+            --radius-pill: 50px;
+            --radius-lg: 28px;
+            --radius-md: 18px;
+            --radius-sm: 12px;
+            --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Reset & Global */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-neu);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography Presets */
+        .serif-editorial {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-padding {
+            padding: 110px 0;
+        }
+
+        /* Editorial Header Styles */
+        .editorial-header {
+            margin-bottom: 50px;
+        }
+
+        .editorial-vol {
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 6px 16px;
+            background: var(--bg-neu);
+            box-shadow: var(--neu-shadow-pressed);
+            border-radius: var(--radius-pill);
+        }
+
+        .editorial-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        .editorial-title span {
+            background: linear-gradient(120deg, #10b981, #0284c7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .editorial-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin-top: 14px;
+        }
+
+        /* Neumorphic Button Styles */
+        .btn-neu {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 34px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            border-radius: var(--radius-pill);
+            background: var(--bg-neu);
+            color: var(--text-dark);
+            box-shadow: var(--neu-shadow-extruded);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-neu:hover {
+            box-shadow: var(--neu-shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-neu:active {
+            box-shadow: var(--neu-shadow-pressed);
+            transform: translateY(0);
+        }
+
+        .btn-neu-accent {
+            background: var(--macaron-mint);
+            color: var(--text-dark);
+            box-shadow: 6px 6px 16px rgba(183, 228, 199, 0.6), -6px -6px 16px #ffffff;
+        }
+
+        .btn-neu-accent:hover {
+            background: #a3d9b5;
+        }
+
+        /* ==========================================================================
+           2. NAVIGATION BAR
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 12px 0;
+            background: rgba(240, 244, 248, 0.88);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            background: var(--macaron-peach-light);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-dark);
+            box-shadow: var(--neu-shadow-pressed);
+        }
+
+        .mobile-hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* ==========================================================================
+           3. HERO MAGAZINE COVER
+           ========================================================================== */
+        .hero {
+            padding-top: 150px;
+            padding-bottom: 90px;
+            position: relative;
+        }
+
+        .hero-magazine-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 48px;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-magazine-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            background: var(--macaron-mint-light);
+            border-radius: var(--radius-pill);
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            box-shadow: var(--neu-shadow-extruded-sm);
+        }
+
+        .hero-title {
+            font-size: 3.4rem;
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .hero-badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 36px;
+        }
+
+        .macaron-badge {
+            padding: 8px 18px;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            box-shadow: var(--neu-shadow-extruded-sm);
+        }
+
+        .macaron-badge.b-mint { background: var(--macaron-mint-light); }
+        .macaron-badge.b-peach { background: var(--macaron-peach-light); }
+        .macaron-badge.b-lavender { background: var(--macaron-lavender); }
+        .macaron-badge.b-blue { background: var(--macaron-blue-light); }
+
+        .hero-cover-img-wrapper {
+            position: relative;
+        }
+
+        .hero-img-frame {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--neu-shadow-pressed);
+            padding: 10px;
+            background: var(--bg-neu);
+        }
+
+        .hero-img-frame img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            display: block;
+        }
+
+        .hero-quote-card {
+            position: absolute;
+            bottom: -20px;
+            left: -20px;
+            background: var(--macaron-cream);
+            padding: 20px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--neu-shadow-extruded);
+            max-width: 280px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .hero-quote-card p {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           4. EDITORIAL ESSAY & DEPARTMENT INTRO (本系簡章)
+           ========================================================================== */
+        .essay-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 36px;
+            align-items: start;
+        }
+
+        .essay-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .pull-quote {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.6;
+            color: var(--text-dark);
+            border-left: 4px solid var(--macaron-peach);
+            padding-left: 20px;
+            margin: 28px 0;
+            font-style: italic;
+        }
+
+        .sidebar-neu-box {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .stat-item {
+            padding: 18px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--neu-shadow-pressed);
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ==========================================================================
+           5. INTERACTIVE DNA QUIZ
+           ========================================================================== */
+        .quiz-container {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 32px;
+        }
+
+        .quiz-btn {
+            background: var(--bg-neu);
+            border: none;
+            padding: 22px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            cursor: pointer;
+            text-align: left;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .quiz-btn:hover {
+            box-shadow: var(--neu-shadow-hover);
+            transform: translateY(-3px);
+        }
+
+        .quiz-btn.active {
+            box-shadow: var(--neu-shadow-pressed);
+            background: var(--macaron-mint-light);
+        }
+
+        .quiz-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--macaron-peach-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: var(--neu-shadow-extruded-sm);
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 28px;
+            padding: 24px;
+            border-radius: var(--radius-md);
+            background: var(--macaron-blue-light);
+            box-shadow: var(--neu-shadow-pressed);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           6. MACARON FEATURE CARDS (本系特色)
+           ========================================================================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+        }
+
+        .feature-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 36px 28px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--neu-shadow-hover);
+            transform: translateY(-6px);
+        }
+
+        .feature-icon-badge {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        /* ==========================================================================
+           7. FACILITIES SHOWCASE & MODAL LIGHTBOX
+           ========================================================================== */
+        .facility-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-pill {
+            padding: 12px 28px;
+            border-radius: var(--radius-pill);
+            background: var(--bg-neu);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .tab-pill.active, .tab-pill:hover {
+            box-shadow: var(--neu-shadow-pressed);
+            color: var(--text-dark);
+            background: var(--macaron-mint-light);
+        }
+
+        .facility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .facility-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .facility-card:hover {
+            box-shadow: var(--neu-shadow-hover);
+            transform: translateY(-6px);
+        }
+
+        .facility-img-box {
+            height: 220px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--neu-shadow-pressed);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .facility-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .facility-card:hover .facility-img-box img {
+            transform: scale(1.06);
+        }
+
+        .facility-info {
+            padding: 8px 12px 12px 12px;
+        }
+
+        .facility-info h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .facility-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .facility-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        /* Modal Overlay & Card */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(45, 55, 72, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            padding: 24px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            max-width: 680px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            padding: 32px;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-neu);
+            box-shadow: var(--neu-shadow-extruded-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 800;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            box-shadow: var(--neu-shadow-pressed);
+            margin-bottom: 24px;
+        }
+
+        /* ==========================================================================
+           8. ADMISSIONS & PATHWAYS
+           ========================================================================== */
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .pathway-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-md);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+        }
+
+        .pathway-card:hover {
+            box-shadow: var(--neu-shadow-hover);
+        }
+
+        .pathway-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .pathway-header h4 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        /* ==========================================================================
+           9. FOOTER & CONTACT
+           ========================================================================== */
+        .footer {
+            background: var(--bg-neu);
+            padding-top: 80px;
+            padding-bottom: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo h2 {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .footer-logo p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-links-head {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 18px;
+        }
+
+        .footer-links li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-dark);
+            padding-left: 4px;
+        }
+
+        .back-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-neu);
+            box-shadow: var(--neu-shadow-extruded);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            z-index: 999;
+            color: var(--text-dark);
+        }
+
+        .back-top-btn.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .hero-magazine-card {
+                grid-template-columns: 1fr;
+            }
+            .essay-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .mobile-hamburger {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         1. NAVIGATION BAR
+         ========================================== -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo-box">
+                <div class="logo-badge">🌿</div>
+                <div class="logo-text">
+                    <h1>慈濟大學 經營管理學系</h1>
+                    <span>Dept. of Business Management, TCU</span>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#hero" class="nav-link active">封面 Focus</a></li>
+                <li><a href="#essay" class="nav-link">本系簡章</a></li>
+                <li><a href="#quiz" class="nav-link">DNA 測驗</a></li>
+                <li><a href="#features" class="nav-link">特色亮點</a></li>
+                <li><a href="#facilities" class="nav-link">實習場域</a></li>
+                <li><a href="#admissions" class="nav-link">招生進路</a></li>
+            </ul>
+
+            <a href="#admissions" class="btn-neu btn-neu-accent" style="padding: 10px 24px; font-size: 0.88rem;">
+                入學指引
+            </a>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         2. HERO MAGAZINE COVER
+         ========================================== -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-magazine-card">
+                <div>
+                    <div class="hero-magazine-tag">
+                        ✨ VOL. 01 / 2025/2026 FRESHMAN GUIDE
+                    </div>
+                    <h1 class="hero-title serif-editorial">
+                        Flip Your Future.<br>
+                        翻轉商業視野，<br>
+                        翻轉你的未來。
+                    </h1>
+                    <p class="hero-subtitle">
+                        慈濟大學經營管理學系結合頂尖個案教學、實體門市經營與智慧零售實戰，培養兼具人文關懷與戰略眼光的現代商業領袖。
+                    </p>
+
+                    <div class="hero-badge-list">
+                        <span class="macaron-badge b-mint">個案教學研討</span>
+                        <span class="macaron-badge b-peach">知足咖啡館營運</span>
+                        <span class="macaron-badge b-lavender">智慧無人商店</span>
+                        <span class="macaron-badge b-blue">國際商務視野</span>
+                    </div>
+
+                    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                        <a href="#admissions" class="btn-neu btn-neu-accent">
+                            立即探索招生管道 →
+                        </a>
+                        <a href="#quiz" class="btn-neu">
+                            30秒測驗你的商管 DNA
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-cover-img-wrapper">
+                    <div class="hero-img-frame">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Students Discussion">
+                    </div>
+                    <div class="hero-quote-card">
+                        <p class="serif-editorial">“理論與實務並重，下課直接開箱實體經營場域！”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         3. EDITORIAL ESSAY (本系簡章)
+         ========================================== -->
+    <section class="section-padding" id="essay">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 02 / DEPT ESSAY</span>
+                <h2 class="editorial-title serif-editorial">本系簡介與 <span>辦學理念</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">培養具備專業素養、永續戰略與人文溫度的未來商業領袖</p>
+            </div>
+
+            <div class="essay-grid">
+                <div class="essay-card">
+                    <h3 class="serif-editorial" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">
+                        打造帶得走的終身商業競爭力
+                    </h3>
+                    <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 16px;">
+                        慈濟大學經營管理學系以「智慧經營」與「人文永續」為核心，打破傳統單向講授教學。我們引進哈佛式個案教學研討，鼓勵學生在課堂中進行邏輯思辨、戰略決策與團隊溝通。
+                    </p>
+                    <div class="pull-quote serif-editorial">
+                        「我們不只傳授管理理論，更提供真實的實體門市與無人商店，讓你在大學期間就擁有完整的創業與營運經驗。」
+                    </div>
+                    <p style="font-size: 1.05rem; color: var(--text-secondary);">
+                        結合校內「知足咖啡館」實習場域與「智慧商店 Lab」，學生能親自操作品牌行銷、財務損益與 POS 數據分析，接軌全球 ESG 永續經營浪潮。
+                    </p>
+                </div>
+
+                <div class="sidebar-neu-box">
+                    <h4 class="serif-editorial" style="font-size:1.2rem; margin-bottom:20px; font-weight:800;">關鍵數據亮點</h4>
+                    
+                    <div class="stat-item" style="background: var(--macaron-mint-light);">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">實務場域實習機會</span>
+                    </div>
+
+                    <div class="stat-item" style="background: var(--macaron-peach-light);">
+                        <span class="stat-number">雙軌</span>
+                        <span class="stat-label">導師與個案教學模組</span>
+                    </div>
+
+                    <div class="stat-item" style="background: var(--macaron-blue-light);">
+                        <span class="stat-number">多元</span>
+                        <span class="stat-label">國際海外交換交流補助</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         4. INTERACTIVE DNA QUIZ
+         ========================================== -->
+    <section class="section-padding" id="quiz">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 03 / INTERACTIVE QUIZ</span>
+                <h2 class="editorial-title serif-editorial">測測看！你的 <span>商管 DNA 天生配</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">點擊最符合你性格的描述，快速找到你的命定學習模組！</p>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="runQuiz(1, this)">
+                        <div class="quiz-icon">🎨</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">品牌創意與社群行銷</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">喜歡潮流品牌、包裝文案與文創行銷</p>
+                        </div>
+                    </button>
+
+                    <button class="quiz-btn" onclick="runQuiz(2, this)">
+                        <div class="quiz-icon">☕</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">門市營運與實體創業</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">夢想開咖啡館、經營連鎖門市與創業</p>
+                        </div>
+                    </button>
+
+                    <button class="quiz-btn" onclick="runQuiz(3, this)">
+                        <div class="quiz-icon">🤖</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">智慧零售與數據分析</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">關注無人商店、科技新零售與數據決策</p>
+                        </div>
+                    </button>
+
+                    <button class="quiz-btn" onclick="runQuiz(4, this)">
+                        <div class="quiz-icon">🌍</div>
+                        <div>
+                            <h4 style="font-size:1rem; font-weight:800;">高階戰略與國際商務</h4>
+                            <p style="font-size:0.85rem; color:var(--text-muted);">嚮往跨國個案研討與國際談判決策</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="quiz-result" id="quizResult">
+                    <h3 id="quizTitle" style="font-size:1.2rem; font-weight:800; color:var(--text-dark); margin-bottom:6px;"></h3>
+                    <p id="quizDesc" style="font-size:0.95rem; color:var(--text-secondary);"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         5. MACARON FEATURE CARDS (本系特色)
+         ========================================== -->
+    <section class="section-padding" id="features">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 04 / CORE FEATURES</span>
+                <h2 class="editorial-title serif-editorial">慈大經管 <span>四大特色亮點</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">翻轉商業教育，培育適應未來的全方位商管人才</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-mint-light);">📖</div>
+                    <h3 class="serif-editorial">翻轉教育與個案教學</h3>
+                    <p>導入哈佛式個案討論，以經典商業案例為基礎，訓練學生獨立思考、簡報提案與高階決策溝通。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-peach-light);">☕</div>
+                    <h3 class="serif-editorial">行銷流通與知足咖啡館</h3>
+                    <p>擁有一流外場行銷實習場域，學生親自參與知足咖啡館的真實營運、定價策略與服務品質管理。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-blue-light);">🛒</div>
+                    <h3 class="serif-editorial">智慧商店與無人零售</h3>
+                    <p>建置無人商店虛擬情境實習 Lab，讓學生提早適應 AI 新零售、自助結帳與顧客數據整合。</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-badge" style="background:var(--macaron-lavender);">🗣️</div>
+                    <h3 class="serif-editorial">簡報溝通與國際視野</h3>
+                    <p>配備專業影音投影簡報教室與國際商務研討空間，培養具備國際流利溝通與自信表達之商管專才。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         6. FACILITIES SHOWCASE & MODAL LIGHTBOX
+         ========================================== -->
+    <section class="section-padding" id="facilities">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 05 / HIGH-TECH LABS</span>
+                <h2 class="editorial-title serif-editorial">特色實習 <span>專業教室場域</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">點擊卡片開箱頂級實務場域與設備</p>
+            </div>
+
+            <div class="facility-tabs">
+                <button class="tab-pill active" onclick="filterFacilities('all', this)">全部場域</button>
+                <button class="tab-pill" onclick="filterFacilities('retail', this)">門市實用場域</button>
+                <button class="tab-pill" onclick="filterFacilities('seminar', this)">研討簡報教室</button>
+            </div>
+
+            <div class="facility-grid">
+                <!-- Facility 1 -->
+                <div class="facility-card" data-category="seminar" onclick="openFacilityModal(1)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Case Study Room">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">個案教學研討室</h3>
+                        <p>以翻轉教育理論設計，弧形梯形座位促進高頻率課堂互動研討。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 2 -->
+                <div class="facility-card" data-category="retail" onclick="openFacilityModal(2)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="Satisfied Cafe">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">經營管理學系實習教室 (知足咖啡館)</h3>
+                        <p>外場行銷體驗實習場域，配備高規專業餐飲設備與真實營運流程。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 3 -->
+                <div class="facility-card" data-category="retail" onclick="openFacilityModal(3)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=800&q=80" alt="Smart Store">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">智慧商店 (Smart Store)</h3>
+                        <p>建置虛擬零售情境，帶領學生體驗 AI 與無人商店管理趨勢。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 4 -->
+                <div class="facility-card" data-category="seminar" onclick="openFacilityModal(4)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=800&q=80" alt="International Room">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">國際商務教室</h3>
+                        <p>安靜舒適的高階研習空間，專為跨國個案與國際商務談判設計。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+
+                <!-- Facility 5 -->
+                <div class="facility-card" data-category="seminar" onclick="openFacilityModal(5)">
+                    <div class="facility-img-box">
+                        <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80" alt="Presentation Room">
+                    </div>
+                    <div class="facility-info">
+                        <h3 class="serif-editorial">簡報與溝通教室</h3>
+                        <p>搭載專業影音簡報投影設備，培養全方位職場簡報與表達魅力。</p>
+                        <span class="facility-cta">探索詳細介紹 →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Box -->
+    <div class="modal-overlay" id="facilityModal">
+        <div class="modal-card">
+            <div class="modal-close" onclick="closeFacilityModal()">&times;</div>
+            <img src="" id="modalFacilityImg" class="modal-img" alt="Facility Detail">
+            <h3 id="modalFacilityTitle" class="serif-editorial" style="font-size:1.6rem; font-weight:800; margin-bottom:12px;"></h3>
+            <p id="modalFacilityDesc" style="color:var(--text-secondary); line-height:1.7; margin-bottom:24px;"></p>
+            <button class="btn-neu btn-neu-accent" onclick="closeFacilityModal()">關閉視窗</button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         7. ADMISSIONS & PATHWAYS
+         ========================================== -->
+    <section class="section-padding" id="admissions">
+        <div class="container">
+            <div class="editorial-header text-center" style="text-align: center;">
+                <span class="editorial-vol">VOL. 06 / ADMISSIONS & CAREERS</span>
+                <h2 class="editorial-title serif-editorial">招生管道與 <span>未來發展</span></h2>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">多元入學管道，開啟你精采的大學篇章</p>
+            </div>
+
+            <div class="pathways-grid">
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-mint);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">🌟</span>
+                        <h4 class="serif-editorial">繁星推薦</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">重視高中平時校內成績，提供優厚入學獎學金，鼓勵優秀高中生選填。</p>
+                </div>
+
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-peach);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">📄</span>
+                        <h4 class="serif-editorial">申請入學</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">採計學習歷程檔案與綜合面試，重視對商業經營與團隊溝通之熱忱。</p>
+                </div>
+
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-blue);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">✏️</span>
+                        <h4 class="serif-editorial">分發入學</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">依據分科測驗及學測成績登記分發，歡迎全台高中職畢業生報考。</p>
+                </div>
+
+                <div class="pathway-card" style="border-top: 4px solid var(--macaron-lavender);">
+                    <div class="pathway-header">
+                        <span style="font-size:1.5rem;">🌐</span>
+                        <h4 class="serif-editorial">國際學生管道</h4>
+                    </div>
+                    <p style="font-size:0.92rem; color:var(--text-secondary);">提供完善的國際學生獎助學金與專屬學習輔導機制。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         8. FOOTER & CONTACT
+         ========================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-card">
+                <div class="footer-logo">
+                    <h2 class="serif-editorial">慈濟大學 經營管理學系</h2>
+                    <p>Department of Business Management, Tzu Chi University</p>
+                    <p style="max-width: 380px;">翻轉商業視野，培養兼具智慧策略與人文溫度的未來管理領袖。</p>
+                </div>
+
+                <div>
+                    <h3 class="footer-links-head serif-editorial">快速導航</h3>
+                    <ul class="footer-links">
+                        <li><a href="#hero">封面焦點</a></li>
+                        <li><a href="#essay">本系簡章</a></li>
+                        <li><a href="#quiz">適性測驗</a></li>
+                        <li><a href="#features">特色亮點</a></li>
+                        <li><a href="#facilities">特色實習教室</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="footer-links-head serif-editorial">與我們聯繫</h3>
+                    <ul class="footer-links" style="font-size:0.9rem; color:var(--text-secondary);">
+                        <li style="margin-bottom:8px;">📍 花蓮市介仁街 67 號</li>
+                        <li style="margin-bottom:8px;">📞 03-857-2677 #31682</li>
+                        <li style="margin-bottom:8px;">✉️ ss62@gms.tcu.edu.tw</li>
+                        <li style="margin-bottom:8px;">👤 系主任：林珍如主任</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align:center; font-size:0.85rem; color:var(--text-muted);">
+                &copy; 2026 慈濟大學 經營管理學系 Department of Business Management, TCU. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top floating button -->
+    <div class="back-top-btn" id="backTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        ↑
+    </div>
+
+    <!-- ==========================================
+         JAVASCRIPT INTERACTIVITIES
+         ========================================== -->
+    <script>
+        // Navbar Scrolled Effect & Back To Top
+        const navbar = document.getElementById('navbar');
+        const backTopBtn = document.getElementById('backTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                backTopBtn.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                backTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Quiz Logic
+        function runQuiz(type, btn) {
+            const btns = document.querySelectorAll('.quiz-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const resultBox = document.getElementById('quizResult');
+            const title = document.getElementById('quizTitle');
+            const desc = document.getElementById('quizDesc');
+
+            resultBox.style.display = 'block';
+
+            if(type === 1) {
+                title.innerText = '🎯 推薦主修：品牌整合行銷與社群企劃';
+                desc.innerText = '你適合知足咖啡館外場實務與數位行銷模組，培養最在地、最有感的品牌包裝實力！';
+            } else if(type === 2) {
+                title.innerText = '☕ 推薦主修：門市營運與實體創業經理人';
+                desc.innerText = '知足咖啡館與經營實務課程將是你的創業搖籃，下課直接學習門市營運與財務結算！';
+            } else if(type === 3) {
+                title.innerText = '🤖 推薦主修：智慧無人商店與新零售數據分析';
+                desc.innerText = '經管系的智慧商店 Lab 將帶你操盤 POS 數據分析與 AI 新零售體驗！';
+            } else if(type === 4) {
+                title.innerText = '🌐 推薦主修：個案教學國際商務策略';
+                desc.innerText = '透過梯形個案研討室與國際商務教室，為你奠定頂尖高階決策與談判能力！';
+            }
+        }
+
+        // Facility Filter Logic
+        function filterFacilities(category, btn) {
+            const pills = document.querySelectorAll('.tab-pill');
+            pills.forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+
+            const cards = document.querySelectorAll('.facility-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Facility Modal Lightbox
+        const facilityData = {
+            1: {
+                title: "個案教學研討室",
+                img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80",
+                desc: "以翻轉教育理論設計，弧形梯形座位促進高頻率課堂互動研討，培育獨立思辨與商業個案決策力。"
+            },
+            2: {
+                title: "經營管理學系實習教室 (知足咖啡館)",
+                img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80",
+                desc: "外場行銷體驗實習場域，配備高規專業餐飲設備，讓學生親自操盤定價策略、門市經營與服務品質管理。"
+            },
+            3: {
+                title: "智慧商店 (Smart Store)",
+                img: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1000&q=80",
+                desc: "建置虛擬情境，讓學生提早適應 AI 無人商店、POS 數據分析與智慧新零售整合體驗。"
+            },
+            4: {
+                title: "國際商務教室",
+                img: "https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=1000&q=80",
+                desc: "安靜舒適高階研習空間，專為跨國商業個案討論與國際溝通談判模擬打造。"
+            },
+            5: {
+                title: "簡報與溝通教室",
+                img: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1000&q=80",
+                desc: "配備專業影音投影簡報設備與反饋機制，全方位訓練職場簡報提案與口語自信。"
+            }
+        };
+
+        function openFacilityModal(id) {
+            const data = facilityData[id];
+            if(!data) return;
+
+            document.getElementById('modalFacilityTitle').innerText = data.title;
+            document.getElementById('modalFacilityImg').src = data.img;
+            document.getElementById('modalFacilityDesc').innerText = data.desc;
+
+            document.getElementById('facilityModal').classList.add('active');
+        }
+
+        function closeFacilityModal() {
+            document.getElementById('facilityModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
