@@ -245,7 +245,7 @@
             box-shadow: var(--neu-shadow-hover);
         }
 
-        /* HERO MAGAZINE COVER */
+        /* HERO MAGAZINE COVER (含左深右淺漸層遮罩優化) */
         .hero {
             padding-top: 150px;
             padding-bottom: 90px;
@@ -263,6 +263,12 @@
             gap: 48px;
             align-items: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-text-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero-magazine-tag {
@@ -287,6 +293,7 @@
             color: var(--text-dark);
             margin-bottom: 20px;
             letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(240, 244, 248, 0.8);
         }
 
         .hero-subtitle {
@@ -294,6 +301,7 @@
             color: var(--text-secondary);
             margin-bottom: 32px;
             line-height: 1.7;
+            text-shadow: 0 1px 4px rgba(240, 244, 248, 0.9);
         }
 
         .hero-badge-list {
@@ -319,6 +327,7 @@
 
         .hero-cover-img-wrapper {
             position: relative;
+            z-index: 1;
         }
 
         .hero-img-frame {
@@ -327,14 +336,30 @@
             box-shadow: var(--neu-shadow-pressed);
             padding: 10px;
             background: var(--bg-neu);
+            position: relative;
         }
 
         .hero-img-frame img {
             width: 100%;
-            height: 420px;
+            height: 440px;
             object-fit: cover;
             border-radius: var(--radius-sm);
             display: block;
+        }
+
+        /* 左深右淺 漸層遮罩 (Left-to-Right Dark-to-Clear Gradient Mask) */
+        .hero-img-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(90deg, 
+                rgba(240, 244, 248, 0.92) 0%, 
+                rgba(240, 244, 248, 0.55) 45%, 
+                rgba(240, 244, 248, 0.05) 100%);
+            pointer-events: none;
         }
 
         .hero-quote-card {
@@ -347,6 +372,7 @@
             box-shadow: var(--neu-shadow-extruded);
             max-width: 280px;
             border: 1px solid rgba(255, 255, 255, 0.9);
+            z-index: 3;
         }
 
         .hero-quote-card p {
@@ -917,6 +943,11 @@
             .hero-magazine-card, .essay-grid, .footer-card {
                 grid-template-columns: 1fr;
             }
+            .hero-img-overlay {
+                background: linear-gradient(180deg, 
+                    rgba(240, 244, 248, 0.85) 0%, 
+                    rgba(240, 244, 248, 0.1) 100%);
+            }
         }
 
         @media (max-width: 768px) {
@@ -972,11 +1003,11 @@
          第一頁：系所主頁內容 (PAGE: HOME)
          ========================================================================== -->
     <div id="page-home">
-        <!-- HERO MAGAZINE COVER -->
+        <!-- HERO MAGAZINE COVER (已整合 G001.jpg 與左深右淺漸層遮罩) -->
         <section class="hero" id="hero">
             <div class="container">
                 <div class="hero-magazine-card">
-                    <div>
+                    <div class="hero-text-content">
                         <div class="hero-magazine-tag">
                             ✨ VOL. 01 / 2025/2026 FRESHMAN GUIDE
                         </div>
@@ -1008,17 +1039,19 @@
 
                     <div class="hero-cover-img-wrapper">
                         <div class="hero-img-frame">
-                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Students Discussion">
+                            <img src="G001.jpg" alt="學生實務與團隊討論畫面">
+                            <!-- 左深右淺漸層遮罩 (CSS Mask Overlay) -->
+                            <div class="hero-img-overlay"></div>
                         </div>
                         <div class="hero-quote-card">
-                            <p class="serif-editorial">“理論與實務並重，下課直接開箱實體經營場域！”</p>
+                            <p class="serif-editorial">“理論與實務並重，下課直接開箱實務團隊營運場域！”</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- EDITORIAL ESSAY (本系簡章 - 已放上第3張系所院辦照片) -->
+        <!-- EDITORIAL ESSAY (本系簡章 - 智慧永續管理學院實景) -->
         <section class="section-padding" id="essay">
             <div class="container">
                 <div class="editorial-header text-center" style="text-align: center;">
@@ -1153,7 +1186,7 @@
                     <div class="feature-card">
                         <div class="feature-icon-badge" style="background:var(--macaron-lavender);">🗣️</div>
                         <h3 class="serif-editorial">簡報溝通與國際視野</h3>
-                        <p>配備專業影音投影簡報教室與國際商務研討空間，培養具備國際流操溝通與自信表達之商管專才。</p>
+                        <p>配備專業影音投影簡報教室與國際商務研討空間，培養具備國際流利溝通與自信表達之商管專才。</p>
                     </div>
                 </div>
             </div>
@@ -1317,7 +1350,7 @@
                         <span class="portfolio-tag-badge b-mint">🍰 團體實務烘焙</span>
                     </div>
                     <div class="portfolio-info">
-                        <h3 class="portfolio-title serif-editorial">團體實做：虎皮蛋糕捲烘焙訓練</h3>
+                        <h3 class="portfolio-title serif-editorial">團體實作：虎皮蛋糕捲烘焙訓練</h3>
                         <p class="portfolio-desc">
                             同學們在專業烘焙教室進行團隊分工與現場實作。學習抹餡、捲蛋糕體與品質控管，展現極佳的團隊協作與實務營運實力。
                         </p>
