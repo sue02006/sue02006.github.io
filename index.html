@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>慈濟大學 經營管理學系 | Dept. of Business Management - TCU</title>
     
-    <!-- Google Fonts: Editorial Serif & Clean Sans -->
+    <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         /* ==========================================================================
@@ -21,7 +22,6 @@
             --macaron-peach: #FFB7B2;
             --macaron-peach-light: #FFDAC1;
             --macaron-lavender: #D4C1EC;
-            --macaron-lavender-light: #E2F0CB;
             --macaron-blue: #BAE6FD;
             --macaron-blue-light: #E0F2FE;
             --macaron-cream: #F4F7F6;
@@ -34,7 +34,6 @@
             
             /* Neumorphic Shadow Tokens */
             --bg-neu: #F0F4F8;
-            --neu-flat: #F0F4F8;
             --neu-shadow-extruded: 10px 10px 24px #d2dbe4, -10px -10px 24px #ffffff;
             --neu-shadow-extruded-sm: 5px 5px 12px #d2dbe4, -5px -5px 12px #ffffff;
             --neu-shadow-pressed: inset 5px 5px 10px #d2dbe4, inset -5px -5px 10px #ffffff;
@@ -732,51 +731,106 @@
             min-height: 80vh;
         }
 
-        .portfolio-empty-card {
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 32px;
+            margin-top: 30px;
+        }
+
+        .portfolio-card {
             background: var(--bg-neu);
             border-radius: var(--radius-lg);
             box-shadow: var(--neu-shadow-extruded);
-            padding: 80px 40px;
-            text-align: center;
+            padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.8);
-            max-width: 860px;
-            margin: 0 auto;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
         }
 
-        .portfolio-empty-icon {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: var(--macaron-cream);
+        .portfolio-card:hover {
+            box-shadow: var(--neu-shadow-hover);
+            transform: translateY(-6px);
+        }
+
+        .portfolio-img-box {
+            height: 280px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--neu-shadow-pressed);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .portfolio-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-card:hover .portfolio-img-box img { transform: scale(1.06); }
+
+        .portfolio-tag-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        .b-mint { background: rgba(216, 243, 220, 0.95); }
+        .b-peach { background: rgba(255, 218, 193, 0.95); }
+
+        .portfolio-info {
+            padding: 4px 8px 12px 8px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .portfolio-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .portfolio-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .portfolio-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 12px;
+        }
+
+        .prep-banner {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
             box-shadow: var(--neu-shadow-extruded-sm);
+            padding: 24px 32px;
+            margin-top: 50px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.8);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.6rem;
-            margin: 0 auto 28px auto;
-        }
-
-        .portfolio-empty-title {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--text-dark);
-            margin-bottom: 16px;
-        }
-
-        .portfolio-empty-desc {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            max-width: 580px;
-            margin: 0 auto 36px auto;
-            line-height: 1.7;
-        }
-
-        .portfolio-tags-preview {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
+            gap: 16px;
         }
 
         /* FOOTER */
@@ -964,7 +1018,7 @@
             </div>
         </section>
 
-        <!-- EDITORIAL ESSAY (本系簡章) -->
+        <!-- EDITORIAL ESSAY (本系簡章 - 已放上第3張系所院辦照片) -->
         <section class="section-padding" id="essay">
             <div class="container">
                 <div class="editorial-header text-center" style="text-align: center;">
@@ -975,17 +1029,22 @@
 
                 <div class="essay-grid">
                     <div class="essay-card">
+                        <!-- 第三張照片：智慧永續管理學院實景 -->
+                        <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--neu-shadow-pressed); margin-bottom: 24px; height: 340px;">
+                            <img src="1793808692716.jpg" alt="智慧永續管理學院" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+
                         <h3 class="serif-editorial" style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">
-                            打造帶得走的終身商業競爭力
+                            智慧永續管理學院 · 打造帶得走的終身商業競爭力
                         </h3>
                         <p style="font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 16px;">
-                            慈濟大學經營管理學系以「智慧經營」與「人文永續」為核心，打破傳統單向講授教學。我們引進哈佛式個案教學研討，鼓勵學生在課堂中進行邏輯思辨、戰略決策與團隊溝通。
+                            慈濟大學經營管理學系隸屬於「智慧永續管理學院」，以「智慧經營」與「人文永續」為核心，打破傳統單向講授教學。我們引進哈佛式個案教學研討，鼓勵學生在課堂中進行邏輯思辨、戰略決策與團隊溝通。
                         </p>
                         <div class="pull-quote serif-editorial">
                             「我們不只傳授管理理論，更提供真實的實體門市與無人商店，讓你在大學期間就擁有完整的創業與營運經驗。」
                         </div>
                         <p style="font-size: 1.05rem; color: var(--text-secondary);">
-                            結合校內「知足咖啡館」實習場域與「智慧商店 Lab」，學生能親自操作品牌行銷、財務損益與 POS 數據分析，接軌全球 ESG 永續經營浪潮。
+                            結合校內專業實習場域與「智慧商店 Lab」，學生能親自操作品牌行銷、財務損益與 POS 數據分析，接軌全球 ESG 永續經營浪潮。
                         </p>
                     </div>
 
@@ -1094,7 +1153,7 @@
                     <div class="feature-card">
                         <div class="feature-icon-badge" style="background:var(--macaron-lavender);">🗣️</div>
                         <h3 class="serif-editorial">簡報溝通與國際視野</h3>
-                        <p>配備專業影音投影簡報教室與國際商務研討空間，培養具備國際流利溝通與自信表達之商管專才。</p>
+                        <p>配備專業影音投影簡報教室與國際商務研討空間，培養具備國際流操溝通與自信表達之商管專才。</p>
                     </div>
                 </div>
             </div>
@@ -1221,36 +1280,60 @@
     </div>
 
     <!-- ==========================================================================
-         第二頁：學生作品專區獨立視圖 (PAGE: PORTFOLIO / SHOWCASE)
+         第二頁：學生作品專區獨立視圖 (PAGE: PORTFOLIO - 含第1張披薩與第2張虎皮蛋糕捲)
          ========================================================================== -->
     <div id="page-portfolio">
         <div class="container">
             <div class="editorial-header text-center" style="text-align: center;">
                 <span class="editorial-vol">VOL. 02 / STUDENT PORTFOLIO</span>
                 <h1 class="editorial-title serif-editorial">學生專題 <span>作品成果展</span></h1>
-                <p class="editorial-desc" style="margin: 10px auto 0 auto;">展現慈濟大學經管學生的實體創業、個案分析與品牌行銷成果</p>
+                <p class="editorial-desc" style="margin: 10px auto 0 auto;">展現慈大經管學生的實作技能、產品研發與團隊協作成果</p>
             </div>
 
-            <!-- 學生作品籌備中 Empty State Card -->
-            <div class="portfolio-empty-card">
-                <div class="portfolio-empty-icon">🎨</div>
-                <h2 class="portfolio-empty-title serif-editorial">學生作品集 籌備中</h2>
-                <p class="portfolio-empty-desc">
-                    我們正精選整理歷屆優秀學生的「知足咖啡館經營專題」、「智慧商店 AI 新零售企劃」與「國際商業個案競賽成果」。最新作品集即將上架！
-                </p>
-
-                <div class="portfolio-tags-preview">
-                    <span class="macaron-badge b-mint">☕ 知足咖啡館營運實作</span>
-                    <span class="macaron-badge b-peach">📊 商業個案決策分析</span>
-                    <span class="macaron-badge b-blue">🛒 智慧零售數據專題</span>
-                    <span class="macaron-badge b-lavender">💡 品牌數位行銷企劃</span>
+            <div class="portfolio-grid">
+                
+                <!-- 作品 1：披薩（未提特定場域） -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img-box">
+                        <img src="Screenshot_2026-11-05-00-25-04-594_jp.naver.line.android-edit.jpg" alt="學生手作夏威夷披薩作品">
+                        <span class="portfolio-tag-badge b-peach">🍕 門市產品研發</span>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title serif-editorial">學生作品：手作鮮蔬夏威夷披薩</h3>
+                        <p class="portfolio-desc">
+                            學生於實務課程中親自進行產品研發與定價測試。發酵麵糰、設計餡料搭配並精算原料成本，實踐門市產品創新與標準化製作流程。
+                        </p>
+                        <div class="portfolio-meta">
+                            <span><i class="fa-regular fa-folder"></i> 門市營運與產品研發</span>
+                            <span><i class="fa-regular fa-user"></i> 經管系學生作品</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <span class="btn-neu btn-neu-accent" onclick="switchView('home')">
-                        ← 返回系所介紹首頁
-                    </span>
+                <!-- 作品 2：虎皮蛋糕捲團體照 -->
+                <div class="portfolio-card">
+                    <div class="portfolio-img-box">
+                        <img src="1793809304331.jpg" alt="虎皮蛋糕捲製作團體照">
+                        <span class="portfolio-tag-badge b-mint">🍰 團體實務烘焙</span>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3 class="portfolio-title serif-editorial">團體實做：虎皮蛋糕捲烘焙訓練</h3>
+                        <p class="portfolio-desc">
+                            同學們在專業烘焙教室進行團隊分工與現場實作。學習抹餡、捲蛋糕體與品質控管，展現極佳的團隊協作與實務營運實力。
+                        </p>
+                        <div class="portfolio-meta">
+                            <span><i class="fa-regular fa-folder"></i> 實務烘焙與團隊協作</span>
+                            <span><i class="fa-regular fa-user"></i> 實作培訓團隊</span>
+                        </div>
+                    </div>
                 </div>
+
+            </div>
+
+            <!-- 下方籌備提示 -->
+            <div class="prep-banner">
+                <span style="font-size:1.5rem;">✨</span>
+                <span style="font-weight:700; color:var(--text-dark);">更多學生專題報告、商業個案與實習作品籌備上架中！</span>
             </div>
         </div>
     </div>
@@ -1370,7 +1453,7 @@
 
             if(type === 1) {
                 title.innerText = '🎯 推薦主修：品牌整合行銷與社群企劃';
-                desc.innerText = '你適合知足咖啡館外場實務與數位行銷模組，培養最在地、最有感的品牌包裝實力！';
+                desc.innerText = '你適合門市實務與數位行銷模組，培養最在地、最有感的品牌包裝實力！';
             } else if(type === 2) {
                 title.innerText = '☕ 推薦主修：門市營運與實體創業經理人';
                 desc.innerText = '知足咖啡館與經營實務課程將是你的創業搖籃，下課直接學習門市營運與財務結算！';
