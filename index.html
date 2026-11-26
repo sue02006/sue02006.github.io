@@ -333,12 +333,8 @@
             background: var(--macaron-peach-light);
         }
 
-        .mobile-drawer .mobile-nav-accent {
-            background: var(--macaron-mint);
-        }
-
         /* ==========================================================================
-           3. HERO MAGAZINE COVER (RESPONSIVE)
+           3. HERO MAGAZINE COVER & SCROLLING CAROUSEL (自動輪播多圖橫幅)
            ========================================================================== */
         .hero {
             padding-top: clamp(110px, 14vw, 150px);
@@ -353,7 +349,7 @@
             padding: clamp(24px, 5vw, 50px);
             border: 1px solid rgba(255, 255, 255, 0.8);
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: 1.05fr 0.95fr;
             gap: clamp(28px, 4vw, 48px);
             align-items: center;
             position: relative;
@@ -426,8 +422,10 @@
         .hero-cover-img-wrapper {
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
+        /* Carousel Frame */
         .hero-img-frame {
             border-radius: var(--radius-md);
             overflow: hidden;
@@ -435,29 +433,115 @@
             padding: 10px;
             background: var(--bg-neu);
             position: relative;
+            user-select: none;
         }
 
-        .hero-img-frame img {
+        .hero-carousel-viewport {
+            position: relative;
             width: 100%;
-            height: clamp(260px, 38vw, 440px);
-            object-fit: cover;
+            height: clamp(270px, 38vw, 440px);
             border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .hero-carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+
+        .hero-carousel-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
         /* 左深右淺 漸層遮罩 */
         .hero-img-overlay {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border-radius: var(--radius-sm);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: linear-gradient(90deg, 
-                rgba(240, 244, 248, 0.90) 0%, 
-                rgba(240, 244, 248, 0.42) 40%, 
+                rgba(240, 244, 248, 0.85) 0%, 
+                rgba(240, 244, 248, 0.35) 38%, 
                 rgba(240, 244, 248, 0.02) 100%);
             pointer-events: none;
+            z-index: 2;
+        }
+
+        /* 輪播左右切換按鈕 */
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(240, 244, 248, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 4;
+            transition: var(--transition);
+        }
+
+        .carousel-nav-btn:hover {
+            background: var(--macaron-mint);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .carousel-prev { left: 12px; }
+        .carousel-next { right: 12px; }
+
+        /* 輪播底部指示點與狀態列 */
+        .carousel-controls-bar {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: var(--radius-pill);
+            background: rgba(240, 244, 248, 0.88);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 4;
+        }
+
+        .carousel-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0;
+        }
+
+        .carousel-dot.active {
+            width: 22px;
+            border-radius: 10px;
+            background: #10b981;
         }
 
         .hero-quote-card {
@@ -465,12 +549,13 @@
             bottom: -16px;
             left: -16px;
             background: var(--macaron-cream);
-            padding: 16px 20px;
+            padding: 15px 20px;
             border-radius: var(--radius-md);
             box-shadow: var(--neu-shadow-extruded);
-            max-width: 270px;
+            max-width: 290px;
             border: 1px solid rgba(255, 255, 255, 0.9);
-            z-index: 3;
+            z-index: 5;
+            transition: opacity 0.3s ease;
         }
 
         .hero-quote-card p {
@@ -478,6 +563,14 @@
             font-weight: 700;
             color: var(--text-dark);
             line-height: 1.5;
+        }
+
+        .hero-quote-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #059669;
+            margin-bottom: 3px;
         }
 
         /* ==========================================================================
@@ -1154,7 +1247,7 @@
             }
             .hero-img-overlay {
                 background: linear-gradient(180deg, 
-                    rgba(240, 244, 248, 0.78) 0%, 
+                    rgba(240, 244, 248, 0.72) 0%, 
                     rgba(240, 244, 248, 0.05) 100%);
             }
             .hero-quote-card {
@@ -1187,6 +1280,11 @@
             }
             .hero-cta-group .btn-neu {
                 width: 100%;
+            }
+            .carousel-nav-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 0.85rem;
             }
             .stat-list {
                 grid-template-columns: 1fr;
@@ -1263,7 +1361,7 @@
          第一頁：系所主頁內容 (PAGE: HOME)
          ========================================================================== -->
     <div id="page-home">
-        <!-- HERO MAGAZINE COVER -->
+        <!-- HERO MAGAZINE COVER WITH AUTO-PLAY CAROUSEL -->
         <section class="hero" id="hero">
             <div class="container">
                 <div class="hero-magazine-card">
@@ -1297,13 +1395,59 @@
                         </div>
                     </div>
 
-                    <div class="hero-cover-img-wrapper">
+                    <!-- 多張照片自動輪播橫幅區塊 -->
+                    <div class="hero-cover-img-wrapper" id="heroCarouselWrapper">
                         <div class="hero-img-frame">
-                            <img src="graph/G005.jpg" alt="慈濟大學校園景致">
-                            <div class="hero-img-overlay"></div>
+                            <div class="hero-carousel-viewport" id="heroCarouselViewport">
+                                <div class="hero-carousel-track" id="heroCarouselTrack">
+                                    <!-- Slide 1 -->
+                                    <div class="hero-carousel-slide" data-tag="01 / 學院中庭" data-caption="“依山傍海的優美學府，結合理論與實務的商管搖籃！”">
+                                        <img src="graph/G005.jpg" alt="晴空典雅教學大樓中庭">
+                                    </div>
+                                    <!-- Slide 2 -->
+                                    <div class="hero-carousel-slide" data-tag="02 / 智慧永續管理學院" data-caption="“培育兼具智慧科技管理與 ESG 人文永續視野的現代領袖！”">
+                                        <img src="graph/G002.jpg" alt="智慧永續管理學院">
+                                    </div>
+                                    <!-- Slide 3 -->
+                                    <div class="hero-carousel-slide" data-tag="03 / 中央山脈景致" data-caption="“坐擁中央山脈壯麗山景，在純淨自然中激發無限商業靈感！”">
+                                        <img src="graph/G007.jpg" alt="中央山脈翠綠山景">
+                                    </div>
+                                    <!-- Slide 4 -->
+                                    <div class="hero-carousel-slide" data-tag="04 / 校園林蔭與草坪" data-caption="“初夏鳳凰花開與翠綠草坪，記錄青春最美好的學習日常！”">
+                                        <img src="graph/G009.jpg" alt="鳳凰花開與綠色大草坪">
+                                    </div>
+                                    <!-- Slide 5 -->
+                                    <div class="hero-carousel-slide" data-tag="05 / 遠山層巒草原" data-caption="“開闊視野與國際接軌，從花蓮出發邁向全球商務舞台！”">
+                                        <img src="graph/G010.jpg" alt="遠山層巒與晴朗草原">
+                                    </div>
+                                </div>
+
+                                <!-- 左深右淺漸層遮罩 -->
+                                <div class="hero-img-overlay"></div>
+
+                                <!-- 左右切換控制按鈕 -->
+                                <button class="carousel-nav-btn carousel-prev" onclick="moveHeroSlide(-1)" aria-label="上一張照片">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button class="carousel-nav-btn carousel-next" onclick="moveHeroSlide(1)" aria-label="下一張照片">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+
+                                <!-- 底部指示點 -->
+                                <div class="carousel-controls-bar" id="heroCarouselDots">
+                                    <button class="carousel-dot active" onclick="goToHeroSlide(0)" aria-label="第 1 張"></button>
+                                    <button class="carousel-dot" onclick="goToHeroSlide(1)" aria-label="第 2 張"></button>
+                                    <button class="carousel-dot" onclick="goToHeroSlide(2)" aria-label="第 3 張"></button>
+                                    <button class="carousel-dot" onclick="goToHeroSlide(3)" aria-label="第 4 張"></button>
+                                    <button class="carousel-dot" onclick="goToHeroSlide(4)" aria-label="第 5 張"></button>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- 動態圖說小卡 (隨輪播同步切換) -->
                         <div class="hero-quote-card">
-                            <p class="serif-editorial">“依山傍海的優美學府，結合理論與實務的商管搖籃！”</p>
+                            <span class="hero-quote-tag" id="heroSlideTag">01 / 學院中庭</span>
+                            <p class="serif-editorial" id="heroSlideCaption">“依山傍海的優美學府，結合理論與實務的商管搖籃！”</p>
                         </div>
                     </div>
                 </div>
@@ -1781,7 +1925,113 @@
 
     <!-- JAVASCRIPT CONTROLLERS -->
     <script>
-        // 手機版抽屜選單開關
+        /* ==========================================================================
+           HERO CAROUSEL CONTROLLER (自動輪播：每 4000ms 切換一次，支援觸控滑動)
+           ========================================================================== */
+        let currentHeroSlide = 0;
+        const heroAutoplayIntervalMs = 4000; // 4秒 (>= 3秒)
+        let heroAutoplayTimer = null;
+
+        const heroTrack = document.getElementById('heroCarouselTrack');
+        const heroSlides = document.querySelectorAll('.hero-carousel-slide');
+        const heroDots = document.querySelectorAll('#heroCarouselDots .carousel-dot');
+        const heroSlideTag = document.getElementById('heroSlideTag');
+        const heroSlideCaption = document.getElementById('heroSlideCaption');
+
+        function updateHeroCarousel() {
+            if (!heroTrack || heroSlides.length === 0) return;
+            heroTrack.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
+
+            heroDots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentHeroSlide);
+            });
+
+            const activeSlide = heroSlides[currentHeroSlide];
+            if (activeSlide && heroSlideTag && heroSlideCaption) {
+                heroSlideTag.innerText = activeSlide.getAttribute('data-tag') || '';
+                heroSlideCaption.innerText = activeSlide.getAttribute('data-caption') || '';
+            }
+        }
+
+        function moveHeroSlide(step) {
+            if (heroSlides.length === 0) return;
+            currentHeroSlide = (currentHeroSlide + step + heroSlides.length) % heroSlides.length;
+            updateHeroCarousel();
+            restartHeroAutoplay();
+        }
+
+        function goToHeroSlide(index) {
+            currentHeroSlide = index;
+            updateHeroCarousel();
+            restartHeroAutoplay();
+        }
+
+        function startHeroAutoplay() {
+            stopHeroAutoplay();
+            heroAutoplayTimer = setInterval(() => {
+                currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+                updateHeroCarousel();
+            }, heroAutoplayIntervalMs);
+        }
+
+        function stopHeroAutoplay() {
+            if (heroAutoplayTimer) {
+                clearInterval(heroAutoplayTimer);
+                heroAutoplayTimer = null;
+            }
+        }
+
+        function restartHeroAutoplay() {
+            stopHeroAutoplay();
+            startHeroAutoplay();
+        }
+
+        // 滑鼠懸停暫停與手機觸控滑動支援
+        const heroCarouselWrapper = document.getElementById('heroCarouselWrapper');
+        const heroCarouselViewport = document.getElementById('heroCarouselViewport');
+
+        if (heroCarouselWrapper) {
+            heroCarouselWrapper.addEventListener('mouseenter', stopHeroAutoplay);
+            heroCarouselWrapper.addEventListener('mouseleave', startHeroAutoplay);
+        }
+
+        if (heroCarouselViewport) {
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            heroCarouselViewport.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                stopHeroAutoplay();
+            }, { passive: true });
+
+            heroCarouselViewport.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const swipeThreshold = 40;
+                if (touchStartX - touchEndX > swipeThreshold) {
+                    moveHeroSlide(1);
+                } else if (touchEndX - touchStartX > swipeThreshold) {
+                    moveHeroSlide(-1);
+                } else {
+                    startHeroAutoplay();
+                }
+            }, { passive: true });
+        }
+
+        // 頁面分頁隱藏時暫停計時器以節省效能
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopHeroAutoplay();
+            } else {
+                startHeroAutoplay();
+            }
+        });
+
+        // 啟動自動輪播
+        startHeroAutoplay();
+
+        /* ==========================================================================
+           NAVIGATION & ROUTING CONTROLLERS
+           ========================================================================== */
         function toggleMobileDrawer(forceClose = false) {
             const drawer = document.getElementById('mobileDrawer');
             const icon = document.getElementById('mobileMenuIcon');
@@ -1819,6 +2069,7 @@
             if (viewName === 'portfolio') {
                 pageHome.style.display = 'none';
                 pagePortfolio.style.display = 'block';
+                stopHeroAutoplay();
                 if (window.innerWidth > 1120) {
                     homeNavLinks.style.display = 'none';
                     portfolioNavLinks.style.display = 'block';
@@ -1827,6 +2078,7 @@
             } else {
                 pageHome.style.display = 'block';
                 pagePortfolio.style.display = 'none';
+                startHeroAutoplay();
                 if (window.innerWidth > 1120) {
                     homeNavLinks.style.display = 'flex';
                     portfolioNavLinks.style.display = 'none';
@@ -1967,7 +2219,7 @@
             document.getElementById('facilityModal').classList.remove('active');
         }
 
-        // ESC 鍵關閉燈箱
+        // ESC 鍵關閉燈箱與選單
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeFacilityModal();
