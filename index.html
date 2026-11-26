@@ -215,15 +215,15 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 12px;
             list-style: none;
         }
 
         .nav-link {
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-secondary);
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: var(--radius-pill);
             transition: var(--transition);
             cursor: pointer;
@@ -357,8 +357,8 @@
             border-radius: var(--radius-sm);
             background: linear-gradient(90deg, 
                 rgba(240, 244, 248, 0.92) 0%, 
-                rgba(240, 244, 248, 0.55) 45%, 
-                rgba(240, 244, 248, 0.05) 100%);
+                rgba(240, 244, 248, 0.45) 40%, 
+                rgba(240, 244, 248, 0.02) 100%);
             pointer-events: none;
         }
 
@@ -648,6 +648,68 @@
             color: var(--text-dark);
         }
 
+        /* ==========================================================================
+           CAMPUS SCENERY GALLERY (校園景色相簿區塊)
+           ========================================================================== */
+        .campus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .campus-card {
+            background: var(--bg-neu);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--neu-shadow-extruded);
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .campus-card:hover {
+            box-shadow: var(--neu-shadow-hover);
+            transform: translateY(-6px);
+        }
+
+        .campus-img-box {
+            height: 240px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--neu-shadow-pressed);
+            position: relative;
+        }
+
+        .campus-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .campus-card:hover .campus-img-box img {
+            transform: scale(1.06);
+        }
+
+        .campus-caption {
+            padding: 16px 10px 6px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .campus-caption h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .campus-caption span {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
         /* MODAL */
         .modal-overlay {
             position: fixed;
@@ -676,7 +738,7 @@
             background: var(--bg-neu);
             border-radius: var(--radius-lg);
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            max-width: 680px;
+            max-width: 720px;
             width: 100%;
             overflow: hidden;
             position: relative;
@@ -707,7 +769,7 @@
 
         .modal-img {
             width: 100%;
-            height: 280px;
+            height: 360px;
             object-fit: cover;
             border-radius: var(--radius-md);
             box-shadow: var(--neu-shadow-pressed);
@@ -977,6 +1039,7 @@
                 <li><a href="#quiz" class="nav-link">DNA 測驗</a></li>
                 <li><a href="#features" class="nav-link">特色亮點</a></li>
                 <li><a href="#facilities" class="nav-link">實習場域</a></li>
+                <li><a href="#campus" class="nav-link">校園景致</a></li>
                 <li><a href="#admissions" class="nav-link">招生進路</a></li>
                 <!-- 跳轉第二頁按鈕 -->
                 <li>
@@ -1003,7 +1066,7 @@
          第一頁：系所主頁內容 (PAGE: HOME)
          ========================================================================== -->
     <div id="page-home">
-        <!-- HERO MAGAZINE COVER (使用 GitHub graph 資料夾圖片) -->
+        <!-- HERO MAGAZINE COVER (使用藍天白雲校園中庭 G005.jpg 搭配漸層遮罩) -->
         <section class="hero" id="hero">
             <div class="container">
                 <div class="hero-magazine-card">
@@ -1039,19 +1102,19 @@
 
                     <div class="hero-cover-img-wrapper">
                         <div class="hero-img-frame">
-                            <img src="graph/G001.jpg" alt="學生實務與團隊討論畫面">
+                            <img src="graph/G005.jpg" alt="慈濟大學校園景致">
                             <!-- 左深右淺漸層遮罩 -->
                             <div class="hero-img-overlay"></div>
                         </div>
                         <div class="hero-quote-card">
-                            <p class="serif-editorial">“理論與實務並重，下課直接開箱實務團隊營運場域！”</p>
+                            <p class="serif-editorial">“依山傍海的優美學府，結合理論與實務的商管搖籃！”</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- EDITORIAL ESSAY (本系簡章 - 智慧永續管理學院圖檔) -->
+        <!-- EDITORIAL ESSAY (本系簡章 - 智慧永續管理學院 G002.jpg) -->
         <section class="section-padding" id="essay">
             <div class="container">
                 <div class="editorial-header text-center" style="text-align: center;">
@@ -1062,7 +1125,7 @@
 
                 <div class="essay-grid">
                     <div class="essay-card">
-                        <!-- 智慧永續管理學院照片 -->
+                        <!-- 智慧永續管理學院照片 (更新為 G002.jpg) -->
                         <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--neu-shadow-pressed); margin-bottom: 24px; height: 340px;">
                             <img src="graph/G002.jpg" alt="智慧永續管理學院" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
@@ -1266,11 +1329,101 @@
             </div>
         </section>
 
+        <!-- CAMPUS SCENERY GALLERY (校園景色圖庫 G004 ~ G010) -->
+        <section class="section-padding" id="campus">
+            <div class="container">
+                <div class="editorial-header text-center" style="text-align: center;">
+                    <span class="editorial-vol">VOL. 06 / CAMPUS SCENERY</span>
+                    <h2 class="editorial-title serif-editorial">花蓮校園 <span>四季人文景致</span></h2>
+                    <p class="editorial-desc" style="margin: 10px auto 0 auto;">坐擁中央山脈的壯麗山嵐與人文建築，在最純淨的自然環境中激發商業靈感（點擊照片可放大）</p>
+                </div>
+
+                <div class="campus-grid">
+                    <!-- 1. G004.jpg -->
+                    <div class="campus-card" onclick="openLightbox('graph/G004.jpg', '雨霧山嵐林蔭步道', '細雨濛濛中，遠方山嵐雲霧繚繞，校園林蔭步道顯得格外靜謐清幽。')">
+                        <div class="campus-img-box">
+                            <img src="graph/G004.jpg" alt="雨霧山嵐林蔭步道">
+                        </div>
+                        <div class="campus-caption">
+                            <h4 class="serif-editorial">雨霧山嵐林蔭步道</h4>
+                            <span>🔍 點擊放大</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. G005.jpg -->
+                    <div class="campus-card" onclick="openLightbox('graph/G005.jpg', '晴空典雅教學大樓中庭', '藍天白雲映襯著對稱典雅的拱廊建築與青翠草坪，展現濃厚的學術氛圍。')">
+                        <div class="campus-img-box">
+                            <img src="graph/G005.jpg" alt="晴空典雅教學大樓中庭">
+                        </div>
+                        <div class="campus-caption">
+                            <h4 class="serif-editorial">晴空典雅教學大樓中庭</h4>
+                            <span>🔍 點擊放大</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. G006.jpg -->
+                    <div class="campus-card" onclick="openLightbox('graph/G006.jpg', '雲隙聖光與建築剪影', '陽光穿透厚重雲層灑落校園建築，帶來充滿希望與活力的早晨光影。')">
+                        <div class="campus-img-box">
+                            <img src="graph/G006.jpg" alt="雲隙聖光與建築剪影">
+                        </div>
+                        <div class="campus-caption">
+                            <h4 class="serif-editorial">雲隙聖光與建築剪影</h4>
+                            <span>🔍 點擊放大</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. G007.jpg -->
+                    <div class="campus-card" onclick="openLightbox('graph/G007.jpg', '中央山脈翠綠山景', '抬頭即可望見花蓮壯麗的中央山脈與湛藍晴空，是最天然的課餘療癒畫布。')">
+                        <div class="campus-img-box">
+                            <img src="graph/G007.jpg" alt="中央山脈翠綠山景">
+                        </div>
+                        <div class="campus-caption">
+                            <h4 class="serif-editorial">中央山脈翠綠山景</h4>
+                            <span>🔍 點擊放大</span>
+                        </div>
+                    </div>
+
+                    <!-- 5. G008.jpg -->
+                    <div class="campus-card" onclick="openLightbox('graph/G008.jpg', '黃昏暮色與圓月剪影', '傍晚時分金橘色晚霞與明月高掛樹梢，記錄下校園一天之中最浪漫的時刻。')">
+                        <div class="campus-img-box">
+                            <img src="graph/G008.jpg" alt="黃昏暮色與圓月剪影">
+                        </div>
+                        <div class="campus-caption">
+                            <h4 class="serif-editorial">黃昏暮色與圓月剪影</h4>
+                            <span>🔍 點擊放大</span>
+                        </div>
+                    </div>
+
+                    <!-- 6. G009.jpg -->
+                    <div class="campus-card" onclick="openLightbox('graph/G009.jpg', '鳳凰花開與綠色大草坪', '初夏盛開的火紅花樹點綴在翠綠大草坪旁，與後方雲霧山巒交織成美麗風景。')">
+                        <div class="campus-img-box">
+                            <img src="graph/G009.jpg" alt="鳳凰花開與綠色大草坪">
+                        </div>
+                        <div class="campus-caption">
+                            <h4 class="serif-editorial">鳳凰花開與綠色大草坪</h4>
+                            <span>🔍 點擊放大</span>
+                        </div>
+                    </div>
+
+                    <!-- 7. G010.jpg -->
+                    <div class="campus-card" onclick="openLightbox('graph/G010.jpg', '遠山層巒與晴朗草原', '層層疊疊的遠山輪廓與一望無際的綠地，伴隨學子度過充實美好的大學時光。')">
+                        <div class="campus-img-box">
+                            <img src="graph/G010.jpg" alt="遠山層巒與晴朗草原">
+                        </div>
+                        <div class="campus-caption">
+                            <h4 class="serif-editorial">遠山層巒與晴朗草原</h4>
+                            <span>🔍 點擊放大</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ADMISSIONS & PATHWAYS -->
         <section class="section-padding" id="admissions">
             <div class="container">
                 <div class="editorial-header text-center" style="text-align: center;">
-                    <span class="editorial-vol">VOL. 06 / ADMISSIONS & CAREERS</span>
+                    <span class="editorial-vol">VOL. 07 / ADMISSIONS & CAREERS</span>
                     <h2 class="editorial-title serif-editorial">招生管道與 <span>未來發展</span></h2>
                     <p class="editorial-desc" style="margin: 10px auto 0 auto;">多元入學管道，開啟你精采的大學篇章</p>
                 </div>
@@ -1325,7 +1478,7 @@
 
             <div class="portfolio-grid">
                 
-                <!-- 作品 1：手作披薩 -->
+                <!-- 作品 1：手作披薩 (更新為 G003.jpg) -->
                 <div class="portfolio-card">
                     <div class="portfolio-img-box">
                         <img src="graph/G003.jpg" alt="學生手作夏威夷披薩作品">
@@ -1343,10 +1496,10 @@
                     </div>
                 </div>
 
-                <!-- 作品 2：虎皮蛋糕捲團體照 -->
+                <!-- 作品 2：虎皮蛋糕捲團體照 (更新為 G001_2.jpg) -->
                 <div class="portfolio-card">
                     <div class="portfolio-img-box">
-                        <img src="graph/G001.jpg" alt="虎皮蛋糕捲製作團體照">
+                        <img src="graph/G001_2.jpg" alt="虎皮蛋糕捲製作團體照">
                         <span class="portfolio-tag-badge b-mint">🍰 團體實務烘焙</span>
                     </div>
                     <div class="portfolio-info">
@@ -1371,11 +1524,11 @@
         </div>
     </div>
 
-    <!-- MODAL LIGHTBOX -->
+    <!-- MODAL LIGHTBOX (教室場域與校園景色共用放大檢視) -->
     <div class="modal-overlay" id="facilityModal">
         <div class="modal-card">
             <div class="modal-close" onclick="closeFacilityModal()">&times;</div>
-            <img src="" id="modalFacilityImg" class="modal-img" alt="Facility Detail">
+            <img src="" id="modalFacilityImg" class="modal-img" alt="Detail View">
             <h3 id="modalFacilityTitle" class="serif-editorial" style="font-size:1.6rem; font-weight:800; margin-bottom:12px;"></h3>
             <p id="modalFacilityDesc" style="color:var(--text-secondary); line-height:1.7; margin-bottom:24px;"></p>
             <button class="btn-neu btn-neu-accent" onclick="closeFacilityModal()">關閉視窗</button>
@@ -1397,8 +1550,8 @@
                     <ul class="footer-links">
                         <li><a href="#" onclick="switchView('home')">封面焦點</a></li>
                         <li><a href="#essay" onclick="switchView('home')">本系簡章</a></li>
-                        <li><a href="#quiz" onclick="switchView('home')">適性測驗</a></li>
                         <li><a href="#facilities" onclick="switchView('home')">特色實習教室</a></li>
+                        <li><a href="#campus" onclick="switchView('home')">花蓮校園景致</a></li>
                         <li><a href="#" onclick="switchView('portfolio')">學生作品 Showcase ➔</a></li>
                     </ul>
                 </div>
@@ -1515,7 +1668,7 @@
             });
         }
 
-        // Modal 快顯視窗
+        // Modal 快顯視窗 (教室資料)
         const facilityData = {
             1: {
                 title: "個案教學研討室",
@@ -1547,11 +1700,14 @@
         function openFacilityModal(id) {
             const data = facilityData[id];
             if(!data) return;
+            openLightbox(data.img, data.title, data.desc);
+        }
 
-            document.getElementById('modalFacilityTitle').innerText = data.title;
-            document.getElementById('modalFacilityImg').src = data.img;
-            document.getElementById('modalFacilityDesc').innerText = data.desc;
-
+        // 通用圖片燈箱放大檢視
+        function openLightbox(imgSrc, titleText, descText) {
+            document.getElementById('modalFacilityImg').src = imgSrc;
+            document.getElementById('modalFacilityTitle').innerText = titleText;
+            document.getElementById('modalFacilityDesc').innerText = descText;
             document.getElementById('facilityModal').classList.add('active');
         }
 
